@@ -1,0 +1,74 @@
+\documentclass[12pt, a4paper]{article}
+
+% Pakiety językowe i kodowanie
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+
+% Pakiety do formatowania strony i tabel
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{array}
+\usepackage{multicol} % Wymagany do scalania kolumn
+
+% Pakiet do customizacji list i numeracji
+\usepackage{enumitem}
+
+\title{Sprawozdanie z Laboratorium}
+\author{Filip Będkowski, Danylo Drygo}
+\date{\today}
+
+\begin{document}
+
+\noindent
+\begin{tabular}{|p{0.48\textwidth}|p{0.48\textwidth}|}
+    \hline
+    \multicolumn{2}{|l|}{\textit{Lab4 Omówienie projektów}} \\ \hline
+    \textit{Filip Będkowski, Daniel Cebula} & {'Okazjomat'} \\ \hline
+\end{tabular}
+
+\vspace{0.8cm}
+
+\section*{Co zostało wprowadzone}
+
+% Ustawienie formatowania dla wielopoziomowej listy
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Określona struktura programu}
+    \begin{enumerate}
+        \item Podział programu na Frontend oraz Backend
+        \item \textbf{Frontend} realizowany jest przez framework React+Vite+JS 
+        \item \textbf{Backend} realizowany jest w Python
+        \item w pliku .gitignore zaznaczone są pliki pomocnicze i konfiguracyjne edytora vsc, logów, plików tymczasowych
+    \end{enumerate}
+
+    \item \textbf{Użyte biblioteki}
+    \begin{enumerate}[label=\arabic{enumi}.\arabic*.]
+        \item \textbf{Frontend}
+        \begin{itemize}[label=--]
+            \item React - biblioteka ui
+            \item Inline / Embedded SVG - system ikon
+            \item CSS / CSS Modules - stylowanie
+        \end{itemize}
+        \item \textbf{Backend}
+        \begin{itemize}[label=--]
+            \item Pandas - obsługa baz danych
+            \item Crawlee[playwright] - pobieranie danych HTML z obsługą JS
+            \item \textsl{biblioteki w pliku requirements.txt}
+            \item FastAPI do integracji Frontendu z Backendem
+        \end{itemize}
+    \end{enumerate}
+
+    \item \textbf{Standardy kodowania} 
+            \begin{center}
+                Do kodowania używamy programu \textsl{Visual Studio Code} z rozszerzeniami \textsl{prettier} do HTML, CSS, JS, a do Pythona używamy \textsl{Pylance}  
+            \end{center}
+    
+    \item \textbf{Co dalej}
+            \begin{itemize}
+                \item Wprowadzenie pełnej integracji między Frontend i Backend
+                \item Zmiana z Pythona na Rusta ze względu na prędkość pobierania danych
+                \item stworzenie prostego algorytmu analizy cen
+                \item dodanie możliwości tworzenia własnego algorytmu dotyczącego jednego obszaru rynku 
+            \end{itemize}
+\end{enumerate}
+
+\end{document}
