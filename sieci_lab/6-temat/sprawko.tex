@@ -1,0 +1,75 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\setlist[itemize]{label=-}
+
+\begin{document}
+
+% Tabela nagłówkowa wzorowana na obrazku
+\noindent
+\begin{tabular}{|p{3cm}|p{7.5cm}|p{5.5cm}|}
+\hline
+\textit{grupa 6} & \textit{05.10.2026} & \textit{} \\[1.5em]
+\hline
+\multicolumn{3}{|l|}{\textit{6. Strumieniowanie danych}} \\[2.5em]
+\hline
+\multicolumn{2}{|l|}{\textit{Filip Będkowski, Danylo Drygo}} & \textit{} \\[2.5em]
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\section{Wstęp teoretyczny}
+
+\subsection{Informacje ogólne}
+Strumieniowanie jako pojęcie odnoszące się do transmisji danych powstało we wczesnych latach osiemdziesiątych XX wieku. Według Follansbee strumieniowanie danych definiuje się jako „ciągły transfer danych z jednego komputera do drugiego w czasie rzeczywistym” przy użyciu pakietów danych.
+
+Główna różnica pomiędzy strumieniowaniem a pobieraniem danych polega na tym, że przy pobieraniu dane nie mogą zostać odtworzone przed całkowitym zakończeniem pobierania, podczas gdy strumieniowanie umożliwia odtwarzanie danych w trakcie ich odbierania.
+
+Rozróżnia się dwa sposoby strumieniowania danych:
+\begin{itemize}
+    \item \textbf{na żądanie (on demand)} -- strumienie są dostępne na serwerze przez dłuższy czas i są gotowe do odtwarzania w dowolnym momencie,
+    \item \textbf{na żywo (live)} -- dane są dostępne tylko w konkretnym momencie (jak w przypadku audycji radiowych) i nie ma możliwości przewijania odtwarzanej audycji.
+\end{itemize}
+
+\subsection{Rodzaje transmisji wideo}
+\begin{itemize}
+    \item \textbf{Transmisja jeden-do-jednego (unicast)} -- pojedynczy pakiet danych jest przesyłany od nadawcy do jednego odbiorcy, pod dokładnie jeden adres IP (np. realizowana w oparciu o protokół RTP).
+    \item \textbf{Transmisja jeden-do-wielu (multicast)} -- pojedynczy pakiet danych adresowany jest do grupy odbiorców. Ruter docelowy może wysyłać pakiety nie tylko do użytkowników końcowych, ale również do innych ruterów.
+    \item \textbf{Transmisja rozgłoszeniowa (broadcast)} -- pojedynczy pakiet danych jest kopiowany i przesyłany do wszystkich węzłów sieciowych za pomocą specjalnego adresu rozsyłającego.
+\end{itemize}
+
+\subsection{Czynniki wpływające na jakość transmisji cyfrowej}
+\begin{itemize}
+    \item \textbf{Kompresja} -- usuwa część informacji z sygnału (kompresja stratna) w celu zmniejszenia objętości danych. Kluczowym parametrem kodeka jest przepływność bitowa. Przykłady kodeków: audio (mp3, AAC, G.711), wideo (MPEG-2, H.264).
+    \item \textbf{Opóźnienie w transmisji} -- składowe opóźnienia to: opóźnienie pakietyzacji (kodeki), opóźnienie transportu (prędkość transmisji) oraz czas propagacji (odległość między nadajnikiem a odbiornikiem).
+    \item \textbf{Jitter} -- błędny czas odebrania (odczytu) transmitowanych danych, polegający na docieraniu datagramów ze zmiennym opóźnieniem lub w błędnej kolejności. Rozwiązaniem jest stosowanie bufora (\textit{jitterbuffer}), co jednak zwiększa opóźnienie.
+    \item \textbf{Utrata pakietów} -- wynika z przeciążenia łącza lub kolizji w sieci. Pakiety gubią się pojedynczo (\textit{packetgap}) lub paczkami (\textit{burst}), co wywołuje przerwy w sygnale audio/wideo.
+\end{itemize}
+
+\subsection{Protokoły warstwy transportowej i aplikacyjnej}
+Idealna transmisja multimediów powinna charakteryzować się: brakiem strat pakietów, niskimi opóźnieniami, niewielkim narzutem protokołu oraz stabilnością (brakiem jitteru).
+
+\subsubsection{Porównanie protokołów UDP i TCP}
+\begin{itemize}
+    \item \textbf{UDP (User Datagram Protocol):} nagłówek 8 B, bezpołączeniowy, brak retransmisji i kontroli przepływu. Daje mniejsze opóźnienia i niewielki nakład pracy urządzeń, ale dopuszcza straty i zaburzenia sekwencyjności. Każdy pakiet wysyłany jest tylko raz bez potwierdzeń.
+    \item \textbf{TCP (Transmission Control Protocol):} nagłówek 20 B, połączeniowy (sesyjny), posiada mechanizmy retransmisji i kontroli przepływu. Zapewnia brak strat oraz zachowanie sekwencyjności, ale generuje większe opóźnienia. Ponawianie transmisji bez potwierdzenia w określonym czasie może prowadzić do zerwania sesji.
+\end{itemize}
+
+\subsubsection{Pozostałe protokoły multimedialne}
+\begin{itemize}
+    \item \textbf{SIP (Session Initiation Protocol)} -- protokół sygnalizacyjny używany do zestawiania, kontrolowania i negocjacji kodeków podczas sesji. Format wiadomości przypomina HTTP.
+    \item \textbf{RTP (Real-time Transport Protocol)} -- służy do dostarczania strumieni audio i wideo w czasie rzeczywistym z wykorzystaniem UDP. Zapewnia porządkowanie i wykrywanie strat pakietów.
+    \item \textbf{RTCP (Real-time Transport Control Protocol)} -- odpowiada za synchronizację strumieni, raportowanie jakości usług (QoS), renegotiację jakości strumienia oraz przekazywanie danych o użytkownikach w sesji.
+    \item \textbf{WebRTC} -- otwarty standard przesyłania multimediów w czasie rzeczywistym bezpośrednio przez przeglądarki internetowe przy użyciu HTML5 i JavaScript, bez potrzeby dodawania wtyczek.
+\end{itemize}
+
+\end{document}
