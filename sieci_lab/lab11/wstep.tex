@@ -1,0 +1,89 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[margin=2cm]{geometry}
+\usepackage{array}
+
+\begin{document}
+
+% Tabela nagłówkowa
+\noindent
+\begin{tabular}{|p{2.6cm}|p{9.2cm}|p{4.3cm}|}
+\hline
+\textit{Grupa lab.} & \textit{Data wykonania} & \textit{Data odbioru} \\[0.7cm]
+\hline
+\multicolumn{3}{|l|}{\textit{Temat ćwiczenia}} \\
+\multicolumn{3}{|l|}{Pomiary parametrów sieci} \\[0.3cm]
+\hline
+\multicolumn{2}{|l|}{\textit{Imiona i nazwiska.}} & \textit{Ocena i uwagi} \\[0.7cm]
+\hline
+\end{tabular}
+
+\vspace{0.8cm}
+
+\section*{1. Wstęp teoretyczny}
+
+Celem ćwiczenia jest zapoznanie się z programem \textbf{iperf3}, wykonanie pomiarów parametrów łącza między dwoma komputerami w sieci oraz zrozumienie wybranych mechanizmów wpływających na parametry sieci komputerowych.
+
+\subsection*{Narzędzie iperf3}
+
+\textbf{Iperf3} to program służący do pomiaru parametrów łącza pomiędzy dwiema maszynami w sieci. Działa on na systemach Linux i Windows, przy czym w przypadku Windows wyniki wyświetlane przez program mogą być nieprawidłowe, szczególnie podczas pomiarów UDP w kierunku wysyłania. Szczegółową instrukcję programu można wyświetlić w terminalu poleceniem \texttt{iperf3 --help}.
+
+Program działa w dwóch trybach:
+\begin{itemize}
+    \item \textbf{Tryb serwera} -- uruchamia się go parametrem \texttt{-s} lub \texttt{--server}. Domyślnie nasłuchuje on na porcie \textbf{5201}, ale można ustawić inny port przełącznikiem \texttt{-p} lub \texttt{--port}.
+    \item \textbf{Tryb klienta} -- uruchamia się go parametrem \texttt{-c} lub \texttt{--client}, podając adres IP albo nazwę hosta, z którym ma się połączyć. Jeśli serwer korzysta z niestandardowego portu, należy również podać go przełącznikiem \texttt{-p}.
+\end{itemize}
+
+Domyślnie klient wysyła dane do serwera, więc mierzona jest prędkość wysyłania (\texttt{sender} to klient, a \texttt{receiver} to serwer). Jeśli chce się zmierzyć prędkość pobierania, należy użyć trybu odwrotnego z flagą \texttt{-R} lub \texttt{--reverse}. Wtedy serwer wysyła dane (\texttt{sender}), a klient je odbiera (\texttt{receiver}).
+
+\subsection*{Protokoły TCP i UDP w iperf3}
+
+\begin{itemize}
+    \item \textbf{TCP} -- jest to protokół domyślny. Podczas testu wysyłana jest ilość danych, na jaką pozwalają warunki sieciowe. Ważnym elementem TCP jest wysyłanie pakietów potwierdzenia \textbf{ACK} po odebraniu danych i sprawdzeniu ich poprawności za pomocą sum kontrolnych. Jeśli część danych nie dotrze poprawnie, konieczne jest jej ponowne przesłanie. Dlatego urządzenia buforują wysłane dane do momentu otrzymania potwierdzenia ACK. \textbf{Okno TCP} określa ilość danych, które mogą pozostawać wysłane, ale jeszcze niepotwierdzone. Jego rozmiar można ustawić przełącznikiem \texttt{-w}.
+    
+    \item \textbf{UDP} -- włącza się go flagą \texttt{-u}. Domyślnie program dąży w tym trybie do uzyskania przepływności rzędu \textbf{1 Mb/s}. Ilość wysyłanych danych można zmienić przełącznikiem \texttt{-b}, podając wartość przepływności. Można stosować modyfikatory bez spacji, np. \texttt{M} dla megabitów i \texttt{G} dla gigabitów na sekundę. Przełącznik \texttt{-b} działa również w TCP. Pomiar UDP pokazuje między innymi \textbf{utratę pakietów} oraz \textbf{jitter}, czyli zmienność czasu dostarczania pakietów. Może ona wynikać np. ze zmiany trasy pakietów, zakłóceń lub dużego ruchu w sieci.
+\end{itemize}
+
+\subsection*{System DNS, TTL i narzędzie dig}
+
+\textbf{DNS (Domain Name System)} to rozproszony system, który tłumaczy nazwy domenowe (np. \texttt{www.google.com}) na odpowiadające im adresy IP. Dzięki temu nie trzeba wpisywać adresów liczbowych, aby połączyć się z wybranym serwerem. Wyróżnia się:
+
+\begin{itemize}
+    \item \textbf{Rekurencyjny serwer DNS} -- przyjmuje zapytanie od klienta i samodzielnie szuka odpowiedzi, kontaktując się z innymi serwerami DNS.
+    \item \textbf{Autorytatywny serwer DNS} -- przechowuje oficjalne informacje o nazwach w danej strefie domenowej.
+    \item \textbf{Caching DNS} -- mechanizm buforowania wyników zapytań DNS, dzięki któremu kolejne zapytania o tę samą nazwę mogą być obsługiwane szybciej.
+\end{itemize}
+
+Na czas odpowiedzi serwera DNS wpływa między innymi:
+\begin{itemize}
+    \item odległość sieciowa (liczba przeskoków i opóźnienia fizyczne),
+    \item obciążenie serwera,
+    \item obecność wyniku w lokalnej pamięci podręcznej.
+\end{itemize}
+
+\textbf{TTL (Time to Live)} określa czas życia informacji. Jego znaczenie zależy od kontekstu:
+
+\begin{itemize}
+    \item \textbf{W DNS} -- określa czas w sekundach, przez jaki odpowiedź DNS może być przechowywana w pamięci podręcznej (cache) serwera pośredniczącego lub komputera klienta. Po upływie tego czasu wpis zostaje uznany za nieaktualny i konieczne jest ponowne uzyskanie odpowiedzi. Jeśli wynik znajduje się w pamięci podręcznej, występuje sytuacja \textit{cache hit}, natomiast jeśli trzeba go pobrać ponownie, jest to \textit{cache miss}.
+    
+    \item \textbf{W IP} -- określa maksymalną liczbę przeskoków (\textit{hop count}), jakie pakiet może wykonać w sieci. Każdy router zmniejsza wartość TTL o 1. Gdy osiągnie ona 0, pakiet zostaje odrzucony. Mechanizm ten chroni sieć przed zapętleniem pakietów. Typowe początkowe wartości TTL to \textbf{64} (Linux, Unix), \textbf{128} (Windows) i \textbf{255} (niektóre systemy sieciowe).
+\end{itemize}
+
+Do diagnostyki i sprawdzania systemu DNS używa się narzędzia \textbf{dig (Domain Information Groper)}, które umożliwia wysyłanie zapytań do wybranych serwerów DNS oraz analizowanie otrzymanych odpowiedzi.
+
+Główne typy rekordów DNS:
+\begin{itemize}
+    \item \textbf{A} -- mapuje nazwę domenową na 32-bitowy adres IPv4.
+    \item \textbf{AAAA} -- odpowiednik rekordu A dla 128-bitowych adresów IPv6.
+    \item \textbf{MX} -- określa serwery obsługujące pocztę e-mail dla danej domeny. Każdy rekord ma przypisany priorytet (im mniejsza liczba, tym wyższy priorytet).
+    \item \textbf{NS} -- wskazuje autorytatywne serwery nazw dla danej domeny.
+    \item \textbf{CNAME} -- wskazuje, że dana nazwa domenowa jest aliasem innej nazwy.
+    \item \textbf{TXT} -- przechowuje dane tekstowe, często wykorzystywane do weryfikacji domen, np. przez mechanizmy SPF i DKIM.
+    \item \textbf{SOA} -- podstawowy rekord strefy, określający m.in. serwer główny, adres e-mail administratora oraz parametry czasowe zarządzania strefą.
+    \item \textbf{PTR} -- rekord odwrotny, umożliwiający przypisanie adresu IP do nazwy domenowej.
+\end{itemize}
+
+\end{document}
