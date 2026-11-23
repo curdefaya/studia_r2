@@ -1,12 +1,12 @@
 # Fdb version 4
-["pdflatex"] 1795015221.12347 "/home/fbedkowski/Documents/gooowno/sprawko_gr3.tex" "sprawko_gr3.pdf" "sprawko_gr3" 1795015221.56772 0
+["pdflatex"] 1795039044.05849 "/home/fbedkowski/Documents/studia_r2/wcim/L4/sprawko_gr3.tex" "sprawko_gr3.pdf" "sprawko_gr3" 1795039044.5008 0
   "/home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk" 1794957070.19965 25396 e5f18b06c09c8a66152be72662202ca6 ""
   "/home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk" 1793745878.7886 40112 9ef92c25efa867053b565dc92c25dede ""
   "/home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk" 1794957070.80364 49076 219e2540fc2665f27768ee30a52b3482 ""
   "/home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk" 1794957070.40555 19056 f27c87d6068f3820e3e94e6c51c547e2 ""
   "/home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk" 1794957070.60797 28416 e424562c98c5f48bb76279e6cae63e6a ""
   "/home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk" 1794957070.00247 24132 5eb4cd44b36d46f2ce46c1178567938a ""
-  "/home/fbedkowski/Documents/gooowno/sprawko_gr3.tex" 1795015220.97648 7777 340419a08f2f80859d0e2f86dbfa8c81 ""
+  "/home/fbedkowski/Documents/studia_r2/wcim/L4/sprawko_gr3.tex" 1795039043.84581 7777 340419a08f2f80859d0e2f86dbfa8c81 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx0700.tfm" 1775415801 3584 ca0c423beaacd28d53ddce5a826cd558 ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx1000.tfm" 1775415801 3584 2d666ecf6d466d8b007246bc2f94d9da ""
   "/usr/share/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1775415801 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -71,8 +71,8 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1794957952 36052 bb82d3dbdc61572e2da1194db0f3fce0 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1794957947 3101949 f62077e79b899c8a7d1375694563c36c ""
   "porownanie_T123.png" 1795014991.89862 139835 56d62c723a80eb02363d0004b0ca7cad ""
-  "sprawko_gr3.aux" 1795015221.53647 2491 901339b57286b6a21e5392f6fd84010a "pdflatex"
-  "sprawko_gr3.tex" 1795015220.97648 7777 340419a08f2f80859d0e2f86dbfa8c81 ""
+  "sprawko_gr3.aux" 1795039044.46881 2491 901339b57286b6a21e5392f6fd84010a "pdflatex"
+  "sprawko_gr3.tex" 1795039043.84581 7777 340419a08f2f80859d0e2f86dbfa8c81 ""
   "temperatura_3_punkty.png" 1795014991.50263 118003 8f0051dc82265587e19eafe11eddd194 ""
   "wykres_qinv_Ts.png" 1795014991.60463 84079 fe0e5b4f5081b798a28a42aa3d9a1a70 ""
   "wykres_qinv_czas.png" 1795014991.69962 74137 c0cad62e315bbda271c73cc85b7a2987 ""

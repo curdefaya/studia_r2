@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.11.18)  18 NOV 2026 16:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.11.18)  18 NOV 2026 22:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/fbedkowski/Documents/gooowno/sprawko_gr3.tex
-(/home/fbedkowski/Documents/gooowno/sprawko_gr3.tex
+**/home/fbedkowski/Documents/studia_r2/wcim/L4/sprawko_gr3.tex
+(/home/fbedkowski/Documents/studia_r2/wcim/L4/sprawko_gr3.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/share/texmf-dist/tex/latex/base/article.cls
@@ -279,12 +279,12 @@ L3 programming layer <2026-01-19>
  ) 
 Here is how much of TeX's memory you used:
  4437 strings out of 469480
- 69529 string characters out of 5470002
+ 69559 string characters out of 5470002
  497193 words of memory out of 5000000
  33063 multiletter control sequences out of 15000+600000
  639747 words of font info for 67 fonts, out of 8000000 for 9000
  34 hyphenation exceptions out of 8191
- 57i,7n,65p,691b,355s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,7n,65p,701b,355s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
 Output written on sprawko_gr3.pdf (4 pages, 494767 bytes).
 PDF statistics:
