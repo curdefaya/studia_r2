@@ -1,0 +1,120 @@
+\documentclass[11pt,a4paper]{article}
+
+% Pakiety językowe dla pdflatex (bez lmodern i zbędnego inputenc)
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+
+% Marginesy
+\usepackage{geometry}
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+
+% Pakiety pomocnicze
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+
+% --- METRYCZKA AGH ---
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{0.2\textwidth}|p{0.45\textwidth}|p{0.25\textwidth}|}
+\hline
+\textit{grupa 6} & \textit{10.11.2026} & \textit{} \\
+\hline
+\multicolumn{3}{|l|}{\textit{1. Ethernet}} \\
+% \multicolumn{3}{|l|}{IEEE 802.3 (Ethernet) -- Badanie i testowanie okablowania strukturalnego} \\
+\hline
+\multicolumn{2}{|l|}{\textit{Filip Będkowski, Danylo Drygo}} & \textit{} \\
+\multicolumn{2}{|l|}{} & \\[1.5cm]
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.5cm}
+
+% --- CZĘŚĆ WSTĘPNA / WSTĘP TEORETYCZNY ---
+\section{Wstęp teoretyczny}
+
+\subsection{Wprowadzenie do standardu IEEE 802.3}
+Ethernet to standard wykorzystywany w budowie lokalnych sieci komputerowych (LAN). Specyfikacja IEEE 802.3 obejmuje typy kabli, przesyłane nimi sygnały, format ramek oraz protokoły z dwóch najniższych warstw modelu OSI (warstwy fizycznej oraz łącza danych). 
+
+Opracowany w 1976 roku przez firmę Xerox, standard był następnie rozwijany przez konsorcjum DIX (DEC, Intel, Xerox), a ostatecznie przyjęty jako standard IEEE. Bazuje na idei węzłów podłączonych do wspólnego medium transmisyjnego, komunikujących się za pomocą ramek przy użyciu metody dostępu do medium \textbf{CSMA/CD} (\textit{Carrier Sense Multiple Access with Collision Detection}). Każda karta sieciowa posiada unikatowy adres fizyczny MAC. Klasyczne sieci Ethernet charakteryzują się wspólnymi parametrami czasowymi, formatem ramki, procesem transmisji oraz regułami projektowania.
+
+\subsection{Adresacja MAC (Media Access Control)}
+Adres MAC jest 48-bitową liczbą zapisywaną w formacie heksadecymalnym (6 bajtów). Pierwsze 24 bity (3 bajty) stanowią Unikatowy Identyfikator Organizacyjny (\textit{vendor code}) nadawany przez IEEE konkretnemu producentowi. Pozostałe 24 bity są unikalnym identyfikatorem danego egzemplarza karty sieciowej. 
+
+Adresy MAC wykorzystywane są w komunikacji pojedynczej (unicast), grupowej (multicast) oraz rozgłoszeniowej (broadcast).
+
+\subsection{Format ramek Ethernet}
+W sieciach Ethernet wyróżnia się dwa główne formaty ramek: \textbf{IEEE 802.3} oraz \textbf{Ethernet II} (wykorzystywany w stosie TCP/IP).
+
+\begin{itemize}[noitemsep]
+    \item \textbf{Preambuła:} Naprzemienny ciąg 0 i 1 (7 lub 8 bajtów) służący do synchronizacji taktowania.
+    \item \textbf{Znacznik początku ramki (SFD):} 1 bajt (wartość \texttt{10101011}) wyznaczający koniec informacji taktujących.
+    \item \textbf{Adres docelowy i źródłowy:} Po 6 bajtów określających adresy MAC odbiorcy i nadawcy.
+    \item \textbf{Długość / Typ:} 2 bajty; pole interpretowane jako długość ramki (jeśli wartość $< 0x0600$) lub jako typ protokołu wyższej warstwy (np. \texttt{0x0800} dla IPv4, \texttt{0x0806} dla ARP).
+    \item \textbf{Dane i wypełnienie:} Pola danych od 46 do 1500 bajtów. Całkowita długość ramki nie może być krótsza niż 64 bajty ani dłuższa niż 1518 bajtów.
+\end{itemize}
+
+\subsection{Standardy i przepustowości}
+\begin{itemize}[noitemsep]
+    \item \textbf{10 Mbit/s (Standardowy Ethernet):} Kodowanie Manchester zwiększające odporność transmisji asynchronicznej. Istnienie łącza sygnalizowane impulsami NLP (\textit{Normal Link Pulse}) o długości 100--200 ns w odstępach 16 ms.
+    \begin{itemize}[noitemsep]
+        \item \textit{10BASE2 (ThinNet / Cheapernet / cienki koncentryk):} kabel współosiowy RG-58 (średnica ok. 5 mm), maksymalna długość segmentu 185 m, pasmo do 50 MHz. Uszkodzenie kabla powoduje zanik dostępu w całym segmencie. Obwód zamykają terminatory 50 $\Omega$. Dziś niestosowany.
+        \item \textit{10BASE-T:} stosuje 2 pary (4 żyły) kabli UTP kat. 3 lub 5, maksymalna długość segmentu 100 m (jedna para nadaje, druga odbiera). Pozwala na maksymalnie 1024 segmenty i 1024 węzły.
+        \item \textit{FOIRL (\textit{Fiber-optic inter-repeater link}):} pierwotny standard Ethernetu wykorzystujący światłowód.
+    \end{itemize}
+    \item \textbf{Fast Ethernet (100 Mbit/s):} Istnienie łącza sygnalizowane za pomocą FLP (\textit{Fast Link Pulse}) -- zestawu 17 impulsów (co 125 $\mu$s) w odstępach 16 ms. Pierwsze 16 impulsów tworzy tzw. słowo bazowe (obecność impulsu oznacza 1, brak -- 0), a 17. impuls jest impulsem zegarowym.
+    \begin{itemize}[noitemsep]
+        \item \textit{100BASE-TX:} 2 pary skrętki kat. 5, kodowanie 4B/5B zapożyczone z FDDI. Jedno z najpopularniejszych rozwiązań opartych na skrętce.
+        \item \textit{100BASE-T4:} wykorzystuje skrętkę kat. 3 oraz wszystkie 4 pary przewodów.
+        \item \textit{100BASE-T2:} 2 pary skrętki kat. 3, kodowanie 5-poziomowe (PAM5) w celu zmniejszenia częstotliwości.
+        \item \textit{100BASE-FX:} transmisja za pomocą światłowodów wielomodowych, zasięg do 2 km.
+        \item \textit{100BASE-LX10:} światłowody jedno- i wielomodowe. Zasięg do 10 km dla jednomodów i 550 m dla wielomodów.
+        \item \textit{100BASE-SX:} światłowody wielomodowe, zasięg około 460/550 m.
+    \end{itemize}
+    \item \textbf{Gigabit Ethernet (1 Gbit/s):} Istnienie łącza sygnalizowane obecnością 16. impulsu FLP (oznaczającego nadanie dodatkowego zestawu impulsów) oraz tzw. dodatkową stroną.
+    \begin{itemize}[noitemsep]
+        \item \textit{1000BASE-T:} skrętka kat. 5e lub wyższej. Przesył 1 Gb/s wymaga użycia 4 par przewodów i modyfikacji układów transmisyjnych pozwalającej na transmisję ok. 250 Mb/s na parę (kabel kat. 6 przenosi bez strat do 125 Mb/s na sekundę).
+        \item \textit{1000BASE-LX:} zoptymalizowany dla połączeń do 10 km na światłowodach jednomodowych.
+        \item \textit{1000BASE-LH:} transmisja na światłowodzie na odległość do 100 km.
+    \end{itemize}
+    \item \textbf{10Gb Ethernet (10 Gbit/s):} W większości podstandardów wykorzystuje kodowanie 64B/66B. Rzeczywista prędkość transmisji wynosi 10,3125 Gb/s.
+    \begin{itemize}[noitemsep]
+        \item \textit{10GBASE-LX4:} zasięg do 300 m z użyciem światłowodów wielomodowych.
+        \item \textit{10GBASE-ER:} zasięg do 40 km z użyciem światłowodów jednomodowych.
+        \item \textit{10GBASE-CX4:} kable miedziane podwójnie współosiowe (z InfiniBand), zasięg do 15 m.
+        \item \textit{10GBASE-T:} wykorzystuje 16-poziomową modulację amplitudy PAM16, operuje z częstotliwością 500 MHz; optymalnie pracuje ze skrętką kat. 7 (zasięg 100 m) oraz kat. 6a / 6 (dla mniejszych długości).
+    \end{itemize}
+\end{itemize}
+
+\subsection{Media transmisyjne}
+
+\subsubsection{Skrętka miedziana (Twisted-Pair)}
+Składa się z par skręconych przewodów miedzianych w celu ograniczenia przesłuchów.
+\begin{itemize}[noitemsep]
+    \item \textbf{Typy ekranowania:} UTP (nieekranowana), FTP (foliowana), STP (ekranowana oplotem), SFTP (foliowane pary + oplot zewnętrzny).
+    \item \textbf{Kategorie:} Kat. 3 (klasa C, do 16 MHz), Kat. 5 i 5e (klasa D, do 100 MHz), Kat. 6 i 6a (klasa E, do 250/500 MHz), Kat. 7 (klasa F, do 600 MHz).
+    \item \textbf{Sekwencja żył (T-568B):} 1. Biało-pomarańczowy, 2. Pomarańczowy, 3. Biało-zielony, 4. Niebieski, 5. Biało-niebieski, 6. Zielony, 7. Biało-brązowy, 8. Brązowy.
+    \item \textbf{Parametry zasięgu:} Maksymalna długość kabla/segmentu wynosi 100 m.
+\end{itemize}
+
+\subsubsection{Kabel współosiowy (Koncentryczny)}
+Zbudowany z żyły wewnętrznej oraz zewnętrznego ekranu (oplotu) oddzielonych dielektrykiem. Występuje jako Cienki Ethernet (10BASE2, $\frac{1}{4}''$, max 185 m) oraz Gruby Ethernet (10BASE5, $1\frac{1}{2}''$, max 500 m).
+
+\subsection{Aparatura pomiarowa wykorzystywana na zajęciach}
+\begin{itemize}[noitemsep]
+    \item \textbf{Tester LAN-NSHL468:} Pozwala na testowanie ciągłości obwodów we wtykach RJ45/RJ11, wykrywanie zamienionych żył, zwarć, przerw oraz uziemienia kabli STP (dioda G).
+    \item \textbf{Tester LAN-NF-468PH:} Rozszerza funkcjonalność testera NSHL468 o możliwość wykrywania zasilania PoE (standardy 802.3af/at).
+    \item \textbf{Certyfikator SignalTEK NT:} Urządzenie do zaawansowanych testów skrętki (funkcje Wiremap -- mapa połączeń i odległość do błędu, Cable -- przepustowość i stopa błędów, IP test -- konfiguracja IP i diagnostyka transmisji).
+\end{itemize}
+
+\end{document}
