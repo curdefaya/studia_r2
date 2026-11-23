@@ -1,0 +1,212 @@
+#include <algorithm>
+#include <chrono>
+#include <iomanip>
+#include <iostream>
+#include <random>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct SortStats {
+    long long comparisons = 0;
+    bool completed = true;
+};
+
+struct Measurement {
+    double milliseconds = 0.0;
+    SortStats stats;
+};
+
+void insertionSort(vector<int>& data, SortStats& stats,
+                   chrono::steady_clock::time_point deadline) {
+    for (int i = 1; i < static_cast<int>(data.size()); ++i) {
+        int key = data[i];
+        int j = i - 1;
+        while (j >= 0) {
+            ++stats.comparisons;
+            if (data[j] <= key)
+                break;
+            data[j + 1] = data[j];
+            --j;
+            if ((stats.comparisons & 4095) == 0 &&
+                chrono::steady_clock::now() >= deadline) {
+                stats.completed = false;
+                return;
+            }
+        }
+        data[j + 1] = key;
+    }
+}
+
+void merge(vector<int>& data, vector<int>& buffer, int left, int mid,
+           int right, SortStats& stats) {
+    int i = left;
+    int j = mid + 1;
+    int position = left;
+    while (i <= mid && j <= right) {
+        ++stats.comparisons;
+        if (data[i] <= data[j])
+            buffer[position++] = data[i++];
+        else
+            buffer[position++] = data[j++];
+    }
+    while (i <= mid)
+        buffer[position++] = data[i++];
+    while (j <= right)
+        buffer[position++] = data[j++];
+    for (int index = left; index <= right; ++index)
+        data[index] = buffer[index];
+}
+
+void mergeSort(vector<int>& data, vector<int>& buffer, int left, int right,
+               SortStats& stats) {
+    if (left >= right)
+        return;
+    int mid = left + (right - left) / 2;
+    mergeSort(data, buffer, left, mid, stats);
+    mergeSort(data, buffer, mid + 1, right, stats);
+    merge(data, buffer, left, mid, right, stats);
+}
+
+int partition(vector<int>& data, int left, int right, SortStats& stats) {
+    int pivot = data[right];
+    int smaller = left;
+    for (int index = left; index < right; ++index) {
+        ++stats.comparisons;
+        if (data[index] < pivot)
+            swap(data[smaller++], data[index]);
+    }
+    swap(data[smaller], data[right]);
+    return smaller;
+}
+
+void quickSort(vector<int>& data, int left, int right, SortStats& stats) {
+    if (left >= right)
+        return;
+    int pivotPosition = partition(data, left, right, stats);
+    quickSort(data, left, pivotPosition - 1, stats);
+    quickSort(data, pivotPosition + 1, right, stats);
+}
+
+template <typename SortFunction>
+Measurement measure(vector<int> original, SortFunction sortFunction) {
+    SortStats stats;
+    auto start = chrono::steady_clock::now();
+    sortFunction(original, stats);
+    auto end = chrono::steady_clock::now();
+    Measurement result;
+    result.milliseconds =
+        chrono::duration<double, milli>(end - start).count();
+    result.stats = stats;
+    return result;
+}
+
+vector<int> randomData(int size, mt19937& generator) {
+    uniform_int_distribution<int> distribution(0, size);
+    vector<int> data(size);
+    for (int& value : data)
+        value = distribution(generator);
+    return data;
+}
+
+Measurement measureInsertion(const vector<int>& original, double limitMs) {
+    auto deadline = chrono::steady_clock::now() +
+                    chrono::milliseconds(static_cast<long long>(limitMs));
+    return measure(original, [deadline](vector<int>& data, SortStats& stats) {
+        insertionSort(data, stats, deadline);
+    });
+}
+
+Measurement measureMerge(const vector<int>& original) {
+    return measure(original, [](vector<int>& data, SortStats& stats) {
+        if (!data.empty()) {
+            vector<int> buffer(data.size());
+            mergeSort(data, buffer, 0, static_cast<int>(data.size()) - 1,
+                      stats);
+        }
+    });
+}
+
+Measurement measureQuick(const vector<int>& original) {
+    return measure(original, [](vector<int>& data, SortStats& stats) {
+        if (!data.empty())
+            quickSort(data, 0, static_cast<int>(data.size()) - 1, stats);
+    });
+}
+
+void printMeasurement(const Measurement& measurement) {
+    if (measurement.stats.completed) {
+        cout << fixed << setprecision(3) << measurement.milliseconds
+             << " ms, " << measurement.stats.comparisons;
+    } else {
+        cout << "PRZERWANO po " << fixed << setprecision(3)
+             << measurement.milliseconds << " ms, "
+             << measurement.stats.comparisons;
+    }
+}
+
+void printHeader() {
+    cout << left << setw(18) << "Dane"
+         << setw(36) << "Insertion Sort (czas, porownania)"
+         << setw(36) << "Merge Sort (czas, porownania)"
+         << setw(36) << "Quick Sort (czas, porownania)" << "\n";
+}
+
+void printRow(const string& dataName, const vector<int>& data,
+              double insertionLimitMs) {
+    Measurement insertion = measureInsertion(data, insertionLimitMs);
+    Measurement mergeResult = measureMerge(data);
+    Measurement quick = measureQuick(data);
+    cout << left << setw(18) << dataName;
+    printMeasurement(insertion);
+    cout << setw(36) << "";
+    printMeasurement(mergeResult);
+    cout << setw(36) << "";
+    printMeasurement(quick);
+    cout << "\n";
+}
+
+void runSizeExperiment(mt19937& generator) {
+    cout << "Eksperyment 1 - rozmiar danych\n";
+    cout << "Czas w ms, po przecinku liczba porownan.\n";
+    printHeader();
+    for (int size : {100, 1000, 5000, 10000, 50000}) {
+        vector<int> original = randomData(size, generator);
+        printRow("n = " + to_string(size), original, 1000.0);
+    }
+    cout << "\n";
+}
+
+vector<int> almostSortedData(int size) {
+    vector<int> data(size);
+    for (int index = 0; index < size; ++index)
+        data[index] = index;
+    for (int index = 0; index + 1 < size; index += 100)
+        swap(data[index], data[index + 1]);
+    return data;
+}
+
+void runCharacterExperiment(mt19937& generator) {
+    constexpr int size = 10000;
+    vector<int> random = randomData(size, generator);
+    vector<int> increasing(size);
+    for (int index = 0; index < size; ++index)
+        increasing[index] = index;
+    vector<int> decreasing = increasing;
+    reverse(decreasing.begin(), decreasing.end());
+    vector<int> almostSorted = almostSortedData(size);
+    cout << "Eksperyment 2 - charakter danych (n = " << size << ")\n";
+    printHeader();
+    printRow("losowe", random, 1000.0);
+    printRow("rosnace", increasing, 1000.0);
+    printRow("malejace", decreasing, 1000.0);
+    printRow("prawie posort.", almostSorted, 1000.0);
+}
+
+int main() {
+    mt19937 generator(2026);
+    runSizeExperiment(generator);
+    runCharacterExperiment(generator);
+    return 0;
+}

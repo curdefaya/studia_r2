@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.27)  4 NOV 2026 00:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.10.27)  7 NOV 2026 14:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/fbedkowski/Documents/studia_r2/sieci_lab/6-temat/sprawko.tex
-(/home/fbedkowski/Documents/studia_r2/sieci_lab/6-temat/sprawko.tex
+**/home/fbedkowski/Documents/studia/sieci_lab/6-temat/sprawko.tex
+(/home/fbedkowski/Documents/studia/sieci_lab/6-temat/sprawko.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/share/texmf-dist/tex/latex/base/article.cls
@@ -306,12 +306,12 @@ Package rerunfilecheck Info: File `sprawko.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  9973 strings out of 469480
- 156167 string characters out of 5470002
+ 156158 string characters out of 5470002
  592271 words of memory out of 5000000
  38542 multiletter control sequences out of 15000+600000
  635784 words of font info for 56 fonts, out of 8000000 for 9000
  34 hyphenation exceptions out of 8191
- 75i,8n,79p,436b,580s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,8n,79p,433b,580s stack positions out of 10000i,1000n,20000p,200000b,200000s
  </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/fbedkowski/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk>
 Output written on sprawko.pdf (2 pages, 68238 bytes).
 PDF statistics:
