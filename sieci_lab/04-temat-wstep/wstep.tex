@@ -1,0 +1,151 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\begin{document}
+
+\noindent
+\begin{tabularx}{\textwidth}{|p{0.13\textwidth}|X|p{0.30\textwidth}|}
+\hline
+\textit{grupa 6} & \textit{25.11.2026} & \textit{} \\[1.2em]
+\hline
+\multicolumn{3}{|l|}{\textit{4 - NMAP}} \\[1.2em]
+\hline
+\multicolumn{2}{|l|}{\textit{Filip Będkowski, Danylo Drygo}} & \textit{} \\[1.2em]
+\hline
+\end{tabularx}
+
+\vspace{1em}
+
+\section*{Wstęp teoretyczny}
+
+\subsection*{Rodzina protokołów TCP/IP}
+
+TCP/IP jest rodziną współpracujących protokołów, która stanowi podstawę
+komunikacji w Internecie i wielu sieciach lokalnych. Umożliwia łączenie sieci
+zbudowanych z użyciem różnych technologii warstwy łącza danych. Działanie
+protokołów TCP/IP oraz zasady ich współpracy opisują dokumenty RFC
+(\textit{Request For Comments}).
+
+Podstawowym protokołem warstwy internetowej jest IP. W nagłówku pakietu IP
+znajdują się między innymi adres źródłowy, adres docelowy i informacje
+potrzebne do przekazania datagramu. Dane protokołów wyższej warstwy, takich
+jak TCP lub UDP, są przenoszone jako ładunek pakietu IP. Routery przekazują
+pakiety między sieciami na podstawie adresu docelowego i tablic routingu.
+W praktyce używane są dwie wersje IP: IPv4 z adresami 32-bitowymi oraz IPv6
+z adresami 128-bitowymi. IPv6 opracowano między innymi w odpowiedzi na
+ograniczoną pulę adresów IPv4.
+
+\subsection*{Adresowanie IPv4 i podział na podsieci}
+
+Adres IPv4 składa się z 32 bitów zapisywanych zwykle jako cztery oktety
+oddzielone kropkami. Oktet ma 8 bitów i może być przedstawiony w postaci
+dziesiętnej z zakresu 0--255 albo jako zapis binarny złożony z ośmiu znaków.
+Nie wszystkie adresy mogą być wykorzystywane jako zwykłe adresy hostów:
+część zakresów ma specjalne zastosowania, a w typowej podsieci IPv4 osobne
+adresy określają sieć i jej adres rozgłoszeniowy.
+
+W pierwotnym modelu IPv4 adresy dzielono na klasy. W klasach A, B i C
+domyślna część sieciowa miała odpowiednio 8, 16 i 24 bity. Klasa D służyła
+do multicastu, czyli przesyłania pakietów do grupy odbiorców, a klasa E była
+zarezerwowana. Podział klasowy jest obecnie historyczny -- współczesne sieci
+korzystają z adresowania bezklasowego CIDR.
+
+Jednym ze sposobów ograniczania zużycia publicznych adresów IPv4 jest
+korzystanie z adresów prywatnych. Mogą one występować w wielu sieciach
+lokalnych i w odróżnieniu od adresów publicznych nie są globalnie unikalne.
+Zakresy prywatne opisane w RFC 1918 przedstawia tabela.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+Zakres adresów & Liczba adresów \\
+\midrule
+\texttt{10.0.0.0 -- 10.255.255.255} & 16\,777\,216 \\
+\texttt{172.16.0.0 -- 172.31.255.255} & 1\,048\,576 \\
+\texttt{192.168.0.0 -- 192.168.255.255} & 65\,536 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Maska podsieci pozwala wydzielić z adresu IP część określającą podsieć
+i część określającą hosta. Ma taką samą długość jak adres: 32 bity dla IPv4
+i 128 bitów dla IPv6. Zaczyna się ciągiem bitów o wartości 1, po którym
+następuje ciąg bitów o wartości 0. Na podstawie adresu IP i maski można
+wyznaczyć adres podsieci, adres rozgłoszeniowy oraz liczbę adresów hostów.
+Maskę można zapisać binarnie, dziesiętnie z kropkami lub w notacji CIDR,
+na przykład \texttt{255.255.240.0} odpowiada zapisowi \texttt{/20}.
+
+VLSM (\textit{Variable-Length Subnet Mask}) umożliwia używanie masek
+o różnych długościach, dzięki czemu rozmiar podsieci można dopasować do
+jej potrzeb i efektywniej przydzielać adresy. CIDR
+(\textit{Classless Inter-Domain Routing}) wykorzystuje zapis adresu wraz
+z długością maski po ukośniku, na przykład \texttt{192.168.1.0/24}.
+Ułatwia również agregowanie tras i ograniczanie rozmiaru tabel routingu.
+VLSM jest wykorzystywany przy lokalnym planowaniu podsieci, natomiast CIDR
+ma szersze zastosowanie w routingu.
+
+\subsection*{Protokoły TCP i UDP}
+
+TCP (\textit{Transmission Control Protocol}) jest połączeniowym protokołem
+warstwy transportowej. Działa w modelu klient--serwer i zapewnia dostarczenie
+pakietów we właściwej kolejności, bez duplikatów. Do nawiązania połączenia
+wykorzystuje procedurę \textit{three-way handshake}:
+
+\begin{enumerate}
+    \item Klient wysyła segment SYN z początkowym numerem sekwencji.
+    \item Serwer odpowiada segmentem SYN ze swoim numerem sekwencji oraz
+    potwierdzeniem ACK otrzymania segmentu klienta.
+    \item Klient wysyła ACK, potwierdzając otrzymanie segmentu SYN serwera.
+\end{enumerate}
+
+Połączeniem sterują flagi w nagłówku TCP. SYN inicjuje połączenie
+i synchronizuje numery sekwencyjne, ACK wskazuje ważność numeru
+potwierdzenia, FIN sygnalizuje zakończenie wysyłania danych, a RST resetuje
+połączenie lub odrzuca próbę jego ustanowienia. Nagłówek TCP ma co najmniej
+160 bitów i może zawierać opcje o zmiennej długości.
+
+UDP (\textit{User Datagram Protocol}) jest bezpołączeniowym protokołem
+warstwy transportowej. Nie gwarantuje dostarczenia wszystkich pakietów ani
+zachowania ich kolejności, ale zapewnia szybszą transmisję i mniejszy
+narzut danych niż TCP. Jego nagłówek składa się z czterech 16-bitowych pól:
+portu źródłowego, portu docelowego, długości datagramu i sumy kontrolnej.
+
+\subsection*{Porty}
+
+Port jest mechanizmem programowym służącym do identyfikowania procesów
+i usług sieciowych działających na urządzeniu. Razem z adresem IP tworzy
+adres gniazda internetowego, wykorzystywany do przesyłania danych między
+procesami na różnych urządzeniach. Port jest 16-bitową liczbą z zakresu
+0--65535. IANA prowadzi rejestr portów przypisanych usługom, a zakres
+podzielono na trzy grupy:
+
+\begin{itemize}
+    \item porty dobrze znane: 1--1023, używane przez wiele usług systemowych,
+    między innymi FTP (20 i 21), DNS (53) oraz HTTP (80);
+    \item porty zarejestrowane: 1024--49151, rezerwowane przez IANA na
+    wniosek instytucji lub firmy;
+    \item porty przydzielane dynamicznie: 49152--65535, przydzielane
+    tymczasowo, między innymi na potrzeby usług i mechanizmów automatycznego
+    przydzielania portów.
+\end{itemize}
+
+\subsection*{Skanowanie sieci za pomocą Nmap}
+
+Nmap (\textit{Network Mapper}) jest skanerem portów TCP i UDP. Umożliwia
+sprawdzanie dostępności hostów, rozpoznawanie usług oraz identyfikowanie
+systemu operacyjnego skanowanego hosta. Rozpoznawanie systemu może opierać
+się na charakterystycznych cechach pakietów, takich jak wartość TTL lub
+numery sekwencyjne. Wśród rodzajów skanowania opisanych w instrukcji
+znajdują się skanowanie TCP, SYN i UDP, wykrywanie aktywnych hostów,
+rozpoznawanie wersji usług oraz systemu operacyjnego.
+
+\end{document}

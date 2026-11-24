@@ -1,0 +1,438 @@
+% !TeX program = pdflatex
+% !TeX root = ./sprawko.tex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{url}
+\usepackage{placeins}
+\usepackage{pgfplots}
+\usepackage{hyperref}
+
+\pgfplotsset{compat=1.18}
+\geometry{margin=1.8cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\renewcommand{\arraystretch}{1.35}
+\captionsetup{font=footnotesize,labelfont=bf}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue}
+\setcounter{topnumber}{3}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.92}
+\renewcommand{\bottomfraction}{0.82}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.75}
+
+\newcommand{\pole}[1]{\textit{#1}\par\vspace{0.8cm}}
+\newcommand{\wynik}[2]{%
+  \begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=\linewidth,height=0.66\textheight,keepaspectratio]{#1/#2}
+    \caption{\protect\path{#2}}
+  \end{figure}
+}
+\newcommand{\notatka}[2]{%
+  \clearpage
+  \thispagestyle{plain}
+  \begin{center}
+    \includegraphics[width=\linewidth,height=0.82\textheight,keepaspectratio]{zdj_z_zaj/#1}
+    \par\vspace{0.25cm}
+    {\small #2}
+  \end{center}
+}
+
+\begin{document}
+
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{0.17\textwidth}|X|>{\raggedright\arraybackslash}p{0.19\textwidth}|}
+\hline
+\pole{Grupa lab.} & \pole{18.11.2026} & \pole{25.11.2026}\\
+\hline
+\multicolumn{3}{|l|}{\pole{11 - iperf}}\\
+\hline
+\end{tabularx}
+
+\begin{tabularx}{\textwidth}{|X|>{\raggedright\arraybackslash}p{0.32\textwidth}|}
+\pole{Filip Będkowski, Danylo Drygo} & \pole{}\\
+\hline
+\end{tabularx}
+
+\vspace{0.4cm}
+\begin{center}
+  {\Large\bfseries Część praktyczna}
+\end{center}
+
+\section{Opis wykonanego ćwiczenia}
+
+\subsection{Sprzęt i oprogramowanie}
+
+Do prób lokalnych wykorzystaliśmy dwa komputery z systemem Linux: stację
+kliencką (adres \texttt{192.168.102.57}) oraz serwer iperf3
+(\texttt{192.168.102.6}). Urządzenia łączyła badana skrętka Ethernet; po
+pierwszej serii wymieniliśmy przewód i powtórzyliśmy pomiary. Do prób
+zewnętrznych użyliśmy serwerów \texttt{iperf3.moji.fr},
+\texttt{ping.online.net} i \texttt{speedtest.milkywan.fr}.
+
+Przepustowość TCP i UDP mierzyliśmy programem \texttt{iperf3}. Dla TCP
+wykonywaliśmy testy domyślne oraz z rozmiarami okna \texttt{100K}, \texttt{210K},
+\texttt{1M} i \texttt{3M}; weryfikowaliśmy również kierunek odwrotny opcją
+\texttt{-R}. Testy trwały 15 s. Odpowiedzi DNS sprawdzaliśmy programem
+\texttt{dig}: dla domen agh.edu.pl,
+facebook.com, google.com i onet.pl, przez resolver domyślny
+(\texttt{192.168.102.1}), Google DNS (\texttt{8.8.8.8}) i Quad9
+(\texttt{9.9.9.9}).
+
+\subsection{Schemat ćwiczenia}
+
+\begin{center}
+\fbox{\begin{minipage}{0.94\linewidth}
+\centering
+\textbf{Pomiary lokalne}\\
+Klient Ubuntu (\texttt{192.168.102.57})
+$\longleftrightarrow$ badana skrętka
+$\longleftrightarrow$ serwer iperf3 (\texttt{192.168.102.6})\\[0.35em]
+\textbf{Pomiary zewnętrzne}\\
+Klient Ubuntu $\longrightarrow$ Internet
+$\longrightarrow$ \texttt{iperf3.moji.fr}, \texttt{ping.online.net}
+lub \texttt{speedtest.milkywan.fr}\\[0.35em]
+\textbf{Pomiary DNS}\\
+Klient Ubuntu z \texttt{dig}
+$\longrightarrow$ \texttt{192.168.102.1}, \texttt{8.8.8.8}
+lub \texttt{9.9.9.9}
+\end{minipage}}
+\end{center}
+
+\subsection{Wyniki -- zestawienie}
+
+Poniższe przepływności TCP odczytaliśmy z końcowych wierszy \texttt{receiver}
+na zrzutach. W tabeli lokalnej zestawiliśmy serię przed wymianą przewodu
+(\texttt{test\_serwer\_iperf}) i serię po wymianie (\texttt{test\_nasza\_skretka}).
+
+\begin{table}[!htbp]
+\centering
+\caption{Lokalne pomiary TCP, przepływność odbiorcza}
+\begin{tabularx}{0.92\linewidth}{|X|r|r|}
+\hline
+\textbf{Ustawienie okna TCP} &
+\textbf{Przed wymianą [Mbit/s]} &
+\textbf{Po wymianie [Mbit/s]}\\
+\hline
+Domyślne & 902,0 & 92,9\\
+\hline
+\texttt{-w 100K} & 811,0 & 92,9\\
+\hline
+\texttt{-w 210K} & 810,0 & 94,1\\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=0.86\linewidth,
+  height=7cm,
+  xlabel={Rozmiar okna TCP [KiB]},
+  ylabel={Przepływność odbiorcza [Mbit/s]},
+  xmin=90, xmax=220,
+  ymin=0, ymax=1000,
+  xtick={100,210},
+  ytick={0,200,400,600,800,1000},
+  grid=major,
+  legend style={at={(0.5,-0.23)},anchor=north,legend columns=2},
+]
+\addplot+[mark=*,thick] coordinates {(100,811) (210,810)};
+\addlegendentry{Przed wymianą skrętki}
+\addplot+[mark=square*,thick] coordinates {(100,92.9) (210,94.1)};
+\addlegendentry{Po wymianie skrętki}
+\end{axis}
+\end{tikzpicture}
+\caption{Wpływ jawnie ustawionego okna TCP na lokalną przepływność.}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{Przykładowe domyślne pomiary TCP na serwerach publicznych}
+\begin{tabularx}{0.92\linewidth}{|X|r|}
+\hline
+\textbf{Serwer i port} & \textbf{Odbiorca [Mbit/s]}\\
+\hline
+\texttt{iperf3.moji.fr:5200} & 258\\
+\hline
+\texttt{ping.online.net:5200} & 489\\
+\hline
+\texttt{speedtest.milkywan.fr:9202} & 419\\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{Przykładowy wynik zapytania A dla agh.edu.pl}
+\begin{tabularx}{\linewidth}{|X|l|r|r|}
+\hline
+\textbf{Resolver} & \textbf{Odpowiedź IPv4} & \textbf{TTL [s]} & \textbf{Czas [ms]}\\
+\hline
+Domyślny (\texttt{192.168.102.1}) & \texttt{149.156.96.150} & 84106 & 0\\
+\hline
+Google DNS (\texttt{8.8.8.8}) & \texttt{149.156.96.150} & 17349 & 32\\
+\hline
+Quad9 (\texttt{9.9.9.9}) & \texttt{149.156.96.150} & 31230 & 11\\
+\hline
+\end{tabularx}
+\end{table}
+
+Zrzuty obejmują również zapytania A, AAAA, MX, NS i ANY dla badanych domen,
+a także testy UDP. W części publicznej serwer MilkyWan był zajęty na porcie
+9200, dlatego połączenie zestawiliśmy na porcie 9202. Wybrane próby z oknem
+\texttt{1M} zakończyły się błędem i nie zostały potraktowane jako pomiary
+przepływności.
+
+\section{Dokumentacja wyników iperf3}
+
+\subsection{Serwer iperf3.moji.fr}
+\wynik{iperf3_moji_fr}{01_iperf3-c-iperf3.moji.fr-p5200-t15.png}
+\wynik{iperf3_moji_fr}{02_iperf3-c-iperf3.moji.fr-p5200-t15-w100K.png}
+\wynik{iperf3_moji_fr}{03_iperf3-c-iperf3.moji.fr-p5200-t15-w210K.png}
+\wynik{iperf3_moji_fr}{04_iperf3-c-iperf3.moji.fr-p5200-t15-w1M-error-seria.png}
+\wynik{iperf3_moji_fr}{05_iperf3-c-iperf3.moji.fr-p5200-t15-w100K-powtorzenie.png}
+\wynik{iperf3_moji_fr}{06_iperf3-c-iperf3.moji.fr-p5200-t15-R-w100K.png}
+\wynik{iperf3_moji_fr}{07_iperf3-c-iperf3.moji.fr-p5200-t15-R-w210K.png}
+\wynik{iperf3_moji_fr}{08_iperf3-c-iperf3.moji.fr-p5200-t15-R-w210K-powtorzenie.png}
+\wynik{iperf3_moji_fr}{09_iperf3-c-iperf3.moji.fr-p5202-t15-R-u.png}
+\FloatBarrier
+
+\subsection{Serwer ping.online.net}
+\wynik{ping_online_net}{01_dig-ping.online.net-A__iperf3-c-ping.online.net-p5200-t15.png}
+\wynik{ping_online_net}{02_iperf3-c-ping.online.net-p5200-t15-w100K.png}
+\wynik{ping_online_net}{03_iperf3-c-ping.online.net-p5200-t15-w210K.png}
+\wynik{ping_online_net}{04_iperf3-c-ping.online.net-p5200-t15-w1M.png}
+\wynik{ping_online_net}{05_iperf3-c-ping.online.net-p5200-t15-w3M.png}
+\wynik{ping_online_net}{06_iperf3-c-ping.online.net-p5200-t15-R.png}
+\wynik{ping_online_net}{07_iperf3-c-ping.online.net-p5200-t15-R-w100K.png}
+\wynik{ping_online_net}{08_iperf3-c-ping.online.net-p5200-t15-R-w210K.png}
+\wynik{ping_online_net}{09_iperf3-c-ping.online.net-p5200-t15-R-w1M.png}
+\wynik{ping_online_net}{10_iperf3-c-ping.online.net-p5200-t15-R-w3M.png}
+\wynik{ping_online_net}{11_iperf3-c-ping.online.net-p5200-t15-u-R.png}
+\wynik{ping_online_net}{12_iperf3-UDP-serwery-ping-ping6-ping90ms-p5200-p5208-t15-proby.png}
+\FloatBarrier
+
+\subsection{Serwer speedtest.milkywan.fr}
+\wynik{speedtest_milkywan}{01_iperf3-c-speedtest.milkywan.fr-p9200-t15-busy-p9202-t15.png}
+\wynik{speedtest_milkywan}{02_iperf3-c-speedtest.milkywan.fr-p9202-t15-w100K.png}
+\wynik{speedtest_milkywan}{03_iperf3-c-speedtest.milkywan.fr-p9202-t15-w210K.png}
+\wynik{speedtest_milkywan}{04_iperf3-c-speedtest.milkywan.fr-p9202-t15-w1M.png}
+\wynik{speedtest_milkywan}{05_iperf3-c-speedtest.milkywan.fr-p9202-t15-w3M.png}
+\wynik{speedtest_milkywan}{06_iperf3-c-speedtest.milkywan.fr-p9202-t15-R.png}
+\wynik{speedtest_milkywan}{07_iperf3-c-speedtest.milkywan.fr-p9202-t15-R-w100K.png}
+\wynik{speedtest_milkywan}{08_iperf3-c-speedtest.milkywan.fr-p9202-t15-R-w210K.png}
+\wynik{speedtest_milkywan}{09_iperf3-c-speedtest.milkywan.fr-p9202-t15-R-w1M.png}
+\wynik{speedtest_milkywan}{10_iperf3-c-speedtest.milkywan.fr-p9202-t15-R-w3M.png}
+\wynik{speedtest_milkywan}{11_iperf3-c-speedtest.milkywan.fr-p9202-t15-u.png}
+\wynik{speedtest_milkywan}{12_iperf3-c-speedtest.milkywan.fr-p9202-t15-u-R.png}
+\FloatBarrier
+
+\subsection{Połączenie lokalne -- test naszej skrętki}
+\wynik{test_nasza_skretka}{01_iperf3-c-192.168.102.6-t15.png}
+\wynik{test_nasza_skretka}{02_iperf3-c-192.168.102.6-t15-w100K.png}
+\wynik{test_nasza_skretka}{03_iperf3-c-192.168.102.6-t15-w210K.png}
+\wynik{test_nasza_skretka}{04_iperf3-c-192.168.102.6-t15-R.png}
+\wynik{test_nasza_skretka}{05_iperf3-c-192.168.102.6-t15-R-w100K.png}
+\wynik{test_nasza_skretka}{06_iperf3-c-192.168.102.6-t15-R-w210K.png}
+\wynik{test_nasza_skretka}{07_iperf3-c-192.168.102.6-t15-R-w1M-error.png}
+\wynik{test_nasza_skretka}{08_iperf3-c-192.168.102.6-t15-R-w210K-powtorzenie.png}
+\wynik{test_nasza_skretka}{09_iperf3-c-192.168.102.6-t15-R-u.png}
+\FloatBarrier
+
+\subsection{Połączenie lokalne -- test serwera iperf}
+\wynik{test_serwer_iperf}{01_iperf3-c-192.168.102.6-t15.png}
+\wynik{test_serwer_iperf}{02_iperf3-c-192.168.102.6-t15-w100K.png}
+\wynik{test_serwer_iperf}{03_iperf3-c-192.168.102.6-t15-w210K.png}
+\wynik{test_serwer_iperf}{04_iperf3-c-192.168.102.6-t15-R.png}
+\wynik{test_serwer_iperf}{05_iperf3-c-192.168.102.6-t15-R-powtorzenie.png}
+\wynik{test_serwer_iperf}{06_iperf3-c-192.168.102.6-t15-R-w100K.png}
+\wynik{test_serwer_iperf}{07_iperf3-c-192.168.102.6-t15-R-w210K.png}
+\wynik{test_serwer_iperf}{08_iperf3-c-192.168.102.6-t15-R-w210K-powtorzenie.png}
+\wynik{test_serwer_iperf}{09_iperf3-c-192.168.102.6-t15-R-u.png}
+\FloatBarrier
+
+\section{Wyniki zapytań DNS}
+
+\subsection{Domena agh.edu.pl}
+\wynik{zdj_drygo}{01_dig_agh.edu.pl_A-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{02_dig_agh.edu.pl_A-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{03_dig_agh.edu.pl_A-9.9.9.9.jpeg}
+\wynik{zdj_drygo}{04_dig_agh.edu.pl_AAAA-9.9.9.9.jpeg}
+\wynik{zdj_drygo}{05_dig_agh.edu.pl_ANY-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{06_dig_agh.edu.pl_ANY-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{07_dig_agh.edu.pl_ANY-9.9.9.9-TCP.jpeg}
+\FloatBarrier
+
+\subsection{Domena facebook.com}
+\wynik{zdj_drygo}{08_dig_facebook.com_A-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{09_dig_facebook.com_A-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{10_dig_facebook.com_A-9.9.9.9.jpeg}
+\wynik{zdj_drygo}{11_dig_facebook.com_AAAA-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{12_dig_facebook.com_AAAA-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{13_dig_facebook.com_ANY-9.9.9.9.jpeg}
+\wynik{zdj_drygo}{14_dig_facebook.com_MX-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{15_dig_facebook.com_MX-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{16_dig_facebook.com_NS-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{17_dig_facebook.com_NS-8.8.8.8.jpeg}
+\FloatBarrier
+
+\subsection{Domena google.com}
+\wynik{zdj_drygo}{18_dig_google.com_A-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{19_dig_google.com_A-9.9.9.9.jpeg}
+\wynik{zdj_drygo}{20_dig_google.com_ANY-serwer-domyslny-TCP.jpeg}
+\wynik{zdj_drygo}{21_dig_google.com_ANY-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{22_dig_google.com_ANY-9.9.9.9.jpeg}
+\wynik{zdj_drygo}{23_dig_google.com_MX-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{24_dig_google.com_MX-8.8.8.8.jpeg}
+\FloatBarrier
+
+\subsection{Domena onet.pl}
+\wynik{zdj_drygo}{25_dig_onet.pl_A-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{26_dig_onet.pl_A-9.9.9.9.jpeg}
+\wynik{zdj_drygo}{27_dig_onet.pl_AAAA-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{28_dig_onet.pl_AAAA-9.9.9.9.jpeg}
+\wynik{zdj_drygo}{29_dig_onet.pl_ANY-serwer-domyslny.jpeg}
+\wynik{zdj_drygo}{30_dig_onet.pl_ANY-8.8.8.8.jpeg}
+\wynik{zdj_drygo}{31_dig_onet.pl_ANY-9.9.9.9.jpeg}
+\FloatBarrier
+
+\section{Opracowanie wyników}
+
+\subsection{Wpływ okna TCP i wymiany przewodu}
+
+Najwyższą lokalną przepływność uzyskaliśmy przed wymianą skrętki: w teście
+domyślnym odbiornik raportował 902 Mbit/s. Po wymianie przewodu wynik spadł do
+92,9 Mbit/s, czyli był około 9,7 raza niższy (spadek o około 89,7\%). Co ważne,
+po zmianie przewodu wyniki dla okien 100K i 210K pozostały w przedziale
+92,9--94,1 Mbit/s. Taki poziom jest bliski praktycznemu maksimum łącza
+100 Mbit/s, dlatego obserwacja jest zgodna z wynegocjowaniem niższej szybkości
+Ethernet po zmianie przewodu lub jego podłączenia. Sam pomiar iperf3 nie
+potwierdza jednak szybkości negocjacji; do jej jednoznacznego sprawdzenia
+potrzebny byłby odczyt stanu interfejsu sieciowego.
+
+Przed wymianą skrętki ustawienie 100K dało 811 Mbit/s, a 210K -- 810 Mbit/s,
+wobec 902 Mbit/s w teście domyślnym. Różnica pomiędzy dwoma jawnie ustawionymi
+oknami była znikoma, a zwiększenie okna z 100K do 210K nie podniosło wyniku.
+Po wymianie przewodu przepustowość zatrzymała się w okolicy 93 Mbit/s niezależnie
+od tych dwóch wartości. Wskazuje to, że w tej serii ograniczeniem było przede
+wszystkim łącze fizyczne, a nie samo ustawienie okna. Próby z oknem 1M, które
+zakończyły się komunikatem o nieprawidłowym rozmiarze bufora gniazda, pominęliśmy
+na wykresie, ponieważ nie dostarczyły poprawnego wyniku.
+
+\subsection{Porównanie serwerów publicznych i kierunków}
+
+W testach domyślnych uzyskaliśmy około 258 Mbit/s z iperf3.moji.fr,
+489 Mbit/s z ping.online.net i 419 Mbit/s z speedtest.milkywan.fr. Różnica
+pomiędzy najniższym i najwyższym wynikiem wynosiła niemal 1,9 raza, mimo że
+testy trwały po 15 s. Nie traktujemy jej jako różnicy przepustowości samego
+łącza dostępowego: pomiary obejmowały inne trasy, odległości, serwery i warunki
+ich obciążenia. W trybie odwrotnym \texttt{-R} przepływność również się
+zmieniała, co pokazuje, że kierunek transmisji ma znaczenie i nie należy
+utożsamiać wyniku wysyłania z wynikiem pobierania.
+
+Rozmiar okna wpływał wyraźniej w testach zdalnych niż po wymianie skrętki.
+Przy małym oknie TCP nadawca może mieć mniej niepotwierdzonych danych w locie;
+przy większym opóźnieniu na trasie może to ograniczyć osiąganą przepływność.
+Zwiększenie okna nie gwarantuje jednak wzrostu wyniku w każdym pojedynczym
+teście, ponieważ równocześnie zmieniają się obciążenie serwera, retransmisje
+i warunki sieciowe. Na serwerze MilkyWan połączenia na porcie 9200 wielokrotnie
+zwracały komunikat o zajętym serwerze; dlatego do dalszych pomiarów wykorzystaliśmy
+port 9202. Takich komunikatów nie interpretowaliśmy jako zerowej przepustowości.
+
+\subsection{TCP, UDP i wiarygodność pomiaru}
+
+W lokalnych testach UDP uzyskaliśmy około 1,05 Mbit/s, co odpowiada domyślnemu
+docelowemu strumieniowi UDP programu iperf3. W obu zrzutach lokalnych odebrano
+1358 z 1358 datagramów (0\% strat); zarejestrowany jitter wynosił około
+0,058 ms przed wymianą i 0,035 ms po wymianie przewodu. Wynik potwierdza
+poprawny odbiór datagramów w krótkiej, 15-sekundowej próbie, ale nie jest
+pomiarem maksymalnej przepustowości łącza. W części publicznych testów UDP
+występowały błędy zajętego serwera lub brak połączenia, więc nie łączyliśmy
+tych nieudanych prób z wynikami poprawnych transmisji.
+
+Zwracaliśmy uwagę na różnicę między przepływnością nadawcy i odbiorcy oraz na
+retransmisje widoczne w wynikach TCP. Przykładowo, w lokalnej próbie domyślnej
+przed wymianą skrętki odbiornik raportował 902 Mbit/s, a nadawca 903 Mbit/s;
+równocześnie raport zawierał 5190 retransmisji. Powtórzenia i odczyt obu stron
+są zatem ważne przy ocenie stabilności, a pojedynczy wynik nie powinien być
+podstawą do wniosku o jakości całego łącza.
+
+\subsection{Odpowiedzi DNS, czasy i TTL}
+
+Dla zapytania A o agh.edu.pl wszystkie trzy resolvery zwróciły ten sam adres
+\texttt{149.156.96.150}. W zarejestrowanym przykładzie czas odpowiedzi wynosił
+0 ms dla resolvera domyślnego, 32 ms dla Google DNS i 11 ms dla Quad9.
+Jednocześnie TTL w odpowiedziach wynosił odpowiednio 84106 s, 17349 s i
+31230 s. Zestawienie pokazuje, że zgodność adresu nie oznacza identycznego
+stanu pamięci podręcznej: resolvery mogły pobrać rekord w różnym momencie.
+Wartość 0 ms dla resolvera lokalnego jest zgodna z szybkim odczytem z cache,
+ale pojedynczy pomiar nie pozwala ustalić tego z całkowitą pewnością.
+
+Wyniki kolejnych zapytań DNS nie są stałymi parametrami domeny. Czas odpowiedzi
+zależy między innymi od trasy do resolvera i od tego, czy odpowiedź znajduje
+się już w jego cache; TTL zmniejsza się podczas przechowywania rekordu i po
+odświeżeniu zaczyna od wartości nadanej przez źródło autorytatywne. Odpowiedzi
+A i AAAA dotyczą różnych rodzin adresów, rekordy MX wskazują serwery pocztowe,
+a NS -- serwery nazw. Zapytanie ANY zwracało zestaw dostępnych odpowiedzi, ale
+nie należy traktować go jako gwarantowanego, kompletnego wykazu strefy.
+Zmieniające się adresy A dla facebook.com w kolejnych zrzutach są zgodne
+z rotacją odpowiedzi lub rozkładaniem ruchu; nie świadczą same w sobie o błędzie
+resolvera.
+
+\subsection{Ograniczenia}
+
+W przekazanych materiałach wynikowych udokumentowaliśmy pomiary iperf3 oraz
+zapytania dig. Nie ma w nich liczbowych wyników dnsperf, curl, mtr ani
+speedtest.pl, dlatego nie dopisywaliśmy dla tych narzędzi rezultatów, których
+nie można potwierdzić na podstawie zrzutów. Część publicznych prób zakończyła
+się błędem lub komunikatem o zajętym serwerze; zostały zachowane jako
+dokumentacja przebiegu, lecz wyłączone z porównań przepływności.
+
+\section*{Wnioski}
+
+\begin{enumerate}
+  \item \textbf{Potwierdziliśmy}, że po wymianie skrętki lokalna przepływność
+        TCP spadła z około 902 do 92,9 Mbit/s. Stabilne wyniki 92,9--94,1 Mbit/s
+        są zgodne z ograniczeniem do łącza 100 Mbit/s; przyczynę należałoby
+        dodatkowo zweryfikować stanem negocjacji interfejsu i okablowania.
+  \item Dla jawnych okien 100K i 210K przed wymianą uzyskaliśmy odpowiednio
+        811 i 810 Mbit/s, a po wymianie 92,9 i 94,1 Mbit/s. W badanym lokalnym
+        połączeniu zmiana okna nie kompensowała ograniczenia przepustowości
+        powstałego po zmianie przewodu.
+  \item Wyniki publicznych serwerów różniły się od 258 do 489 Mbit/s w testach
+        domyślnych. Uwzględniliśmy odległość, obciążenie i kierunek transmisji,
+        dlatego nie utożsamiamy wyniku pojedynczego serwera z szybkością
+        gwarantowaną przez nasze łącze.
+  \item W lokalnym UDP uzyskaliśmy około 1,05 Mbit/s, jitter poniżej 0,06 ms
+        i brak utraconych datagramów w zarejestrowanych próbach. Do oceny UDP
+        potrzebne są jednocześnie przepływność, jitter i procent strat.
+  \item Dla agh.edu.pl różne resolvery zwróciły ten sam adres IPv4, ale inne
+        wartości TTL i czasu odpowiedzi. Wyniki są zgodne z niezależnym
+        buforowaniem rekordów DNS; dlatego porównywaliśmy domenę, typ rekordu
+        i resolver, a nie samą wartość TTL.
+  \item Powtórzenia i odrzucanie nieudanych prób zwiększają wiarygodność
+        wniosków. Wnioski o narzędziach bez zachowanych wyników pomiarów
+        pozostawiliśmy poza zakresem sprawozdania.
+\end{enumerate}
+
+\section*{Załącznik: notatki z zajęć}
+
+\notatka{02_notatki_dns_ttl_i_rekordy.jpg}{Notatki: system DNS, TTL i typy rekordów.}
+\notatka{03_notatki_wyniki_pomiarow_dns.jpg}{Zapis wyników i TTL dla badanych domen.}
+\notatka{04_notatki_analiza_ttl_i_odpowiedzi_dns.jpg}{Notatki do analizy odpowiedzi DNS.}
+\notatka{05_notatki_scenariusz_serwery_iperf3_i_dns.jpg}{Scenariusz pomiarów publicznych i adresy resolverów.}
+\notatka{06_notatki_scenariusz_testy_lokalne_curl_mtr.jpg}{Notatki do testów lokalnych i narzędzi sieciowych.}
+\notatka{01_notatki_iperf3_dns_strona-tytulowa.jpg}{Strona z danymi grupy i nazwiskami.}
+
+\end{document}
