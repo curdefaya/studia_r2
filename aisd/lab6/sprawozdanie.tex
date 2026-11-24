@@ -1,0 +1,83 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage[margin=12mm]{geometry}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+  basicstyle=\ttfamily\fontsize{7}{8}\selectfont,
+  breaklines=true,
+  columns=fullflexible,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  showstringspaces=false
+}
+
+\begin{document}
+\section*{Zadanie 1}
+\noindent Wynik:
+\begin{verbatim}
+1 2 3 4 5 6 7 8
+\end{verbatim}
+
+\section*{Zadanie 2}
+\noindent Wynik:
+\begin{verbatim}
+Quick Sort: 1 2 3 4 5 6 7 8
+
+Dane            n        Pivot        Porownania        Zamiany   Maks. glebokosc
+losowe          100       ostatni       617               285                14
+losowe          100       losowy        619               415                13
+losowe          1000      ostatni       10537             6808               24
+losowe          1000      losowy        11825             6223               26
+losowe          5000      ostatni       69634             38801              27
+losowe          5000      losowy        68318             41406              29
+losowe          10000     ostatni       149513            82777              29
+losowe          10000     losowy        157481            86815              32
+rosnace         100       ostatni       4950              5049               100
+rosnace         100       losowy        590               441                13
+rosnace         1000      ostatni       499500            500499             1000
+rosnace         1000      losowy        10159             6630               22
+rosnace         5000      ostatni       12497500          12502499           5000
+rosnace         5000      losowy        69210             39164              26
+rosnace         10000     ostatni       49995000          50004999           10000
+rosnace         10000     losowy        151345            85351              30
+malejace        100       ostatni       4950              2549               100
+malejace        100       losowy        576               398                12
+malejace        1000      ostatni       499500            250499             1000
+malejace        1000      losowy        10871             7276               21
+malejace        5000      ostatni       12497500          6252499            5000
+malejace        5000      losowy        71602             44496              29
+malejace        10000     ostatni       49995000          25004999           10000
+malejace        10000     losowy        144239            83637              30
+\end{verbatim}
+
+\section*{Zadanie 3}
+\noindent Wynik:
+\begin{verbatim}
+Eksperyment 1 - rozmiar danych
+n       Insertion Sort            Merge Sort                Quick Sort
+100     0.002 ms, 2509 porownan   0.007 ms, 541 porownan   0.002 ms, 556 porownan
+1000    0.143 ms, 253093 porownan 0.068 ms, 8726 porownan  0.027 ms, 11693 porownan
+5000    2.620 ms, 6161022 porownan0.372 ms, 55184 porownan 0.206 ms, 70925 porownan
+10000   10.976 ms, 25059142 porownan0.597 ms, 120463 porownan0.328 ms, 151363 porownan
+50000   257.904 ms, 627157993 porownan3.198 ms, 718120 porownan1.942 ms, 941938 porownan
+
+Eksperyment 2 - charakter danych, n = 10000
+Dane            Insertion Sort                 Merge Sort                Quick Sort
+losowe          10.376 ms, 25150403 porownan   0.583 ms, 120448 porownan 0.331 ms, 158187 porownan
+rosnace         0.008 ms, 9999 porownan        0.244 ms, 69008 porownan  21.001 ms, 49995000 porownan
+malejace        20.550 ms, 49995000 porownan   0.257 ms, 64608 porownan  20.753 ms, 49995000 porownan
+prawie uporzadkowane 0.009 ms, 10098 porownan 0.249 ms, 69050 porownan  20.691 ms, 49514850 porownan
+\end{verbatim}
+
+\section*{Zadanie 4}
+\noindent Wynik:
+\begin{verbatim}
+Merge Sort: 9
+Quick Select: 9
+\end{verbatim}
+
+\end{document}
