@@ -1,0 +1,46 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 12:26 CET
+Nmap scan report for emi.wibro.agh.edu.pl (149.156.115.1)
+Host is up (0.0011s latency).
+Nmap scan report for babajaga.wibro.agh.edu.pl (149.156.115.17)
+Host is up (0.0030s latency).
+Nmap scan report for dante.wibro.agh.edu.pl (149.156.115.32)
+Host is up (0.0020s latency).
+Nmap scan report for fenix.wibro.agh.edu.pl (149.156.115.41)
+Host is up (0.0014s latency).
+Nmap scan report for 149.156.115.45
+Host is up (0.0027s latency).
+Nmap scan report for lab-1.wibro.agh.edu.pl (149.156.115.61)
+Host is up (0.0017s latency).
+Nmap scan report for 149.156.115.74
+Host is up (0.0042s latency).
+Nmap scan report for 149.156.115.100
+Host is up (0.0028s latency).
+Nmap scan report for krimnorth.wibro.agh.edu.pl (149.156.115.121)
+Host is up (0.0019s latency).
+Nmap scan report for zaljan.wibro.agh.edu.pl (149.156.115.154)
+Host is up (0.0022s latency).
+Nmap scan report for pawelw.wibro.agh.edu.pl (149.156.115.167)
+Host is up (0.0022s latency).
+Nmap scan report for przewoz.wibro.agh.edu.pl (149.156.115.172)
+Host is up (0.0047s latency).
+Nmap scan report for rec.wibro.agh.edu.pl (149.156.115.173)
+Host is up (0.0026s latency).
+Nmap scan report for syriusz.imir.agh.edu.pl (149.156.115.202)
+Host is up (0.0017s latency).
+Nmap scan report for mts.wibro.agh.edu.pl (149.156.115.209)
+Host is up (0.0022s latency).
+Nmap scan report for pr-inf8.wibro.agh.edu.pl (149.156.115.238)
+Host is up (0.0022s latency).
+Nmap scan report for 149.156.115.241
+Host is up (0.0020s latency).
+Nmap scan report for 149.156.115.242
+Host is up (0.0020s latency).
+Nmap scan report for robot.wibro.agh.edu.pl (149.156.115.246)
+Host is up (0.0086s latency).
+Nmap scan report for b1rtr.agh.edu.pl (149.156.115.250)
+Host is up (0.0025s latency).
+Nmap scan report for 149.156.115.251
+Host is up (0.0036s latency).
+Nmap scan report for d1c2950.agh.edu.pl (149.156.115.252)
+Host is up (0.0036s latency).
+Nmap done: 256 IP addresses (22 hosts up) scanned in 3.34 seconds

@@ -1,0 +1,76 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 12:24 CET
+Nmap scan report for prtr.kt.agh.edu.pl (149.156.114.1)
+Host is up (0.0018s latency).
+Nmap scan report for ns1.kt.agh.edu.pl (149.156.114.2)
+Host is up (0.0019s latency).
+Nmap scan report for archive.kt.agh.edu.pl (149.156.114.6)
+Host is up (0.0018s latency).
+Nmap scan report for wiki.kt.agh.edu.pl (149.156.114.7)
+Host is up (0.0018s latency).
+Nmap scan report for elproma.kt.agh.edu.pl (149.156.114.9)
+Host is up (0.0017s latency).
+Nmap scan report for vega.kt.agh.edu.pl (149.156.114.11)
+Host is up (0.0022s latency).
+Nmap scan report for mx.kt.agh.edu.pl (149.156.114.12)
+Host is up (0.0022s latency).
+Nmap scan report for detres-mail.kt.agh.edu.pl (149.156.114.16)
+Host is up (0.0017s latency).
+Nmap scan report for clifford.kt.agh.edu.pl (149.156.114.34)
+Host is up (0.0022s latency).
+Nmap scan report for sonata.kt.agh.edu.pl (149.156.114.36)
+Host is up (0.0024s latency).
+Nmap scan report for nf.kt.agh.edu.pl (149.156.114.38)
+Host is up (0.0024s latency).
+Nmap scan report for submarine.kt.agh.edu.pl (149.156.114.39)
+Host is up (0.0024s latency).
+Nmap scan report for panel.tele.agh.edu.pl (149.156.114.50)
+Host is up (0.0024s latency).
+Nmap scan report for mimas.tele.agh.edu.pl (149.156.114.51)
+Host is up (0.0019s latency).
+Nmap scan report for mach07.kt.agh.edu.pl (149.156.114.61)
+Host is up (0.0022s latency).
+Nmap scan report for pcorzech.kt.agh.edu.pl (149.156.114.73)
+Host is up (0.0058s latency).
+Nmap scan report for lgc.kt.agh.edu.pl (149.156.114.82)
+Host is up (0.0019s latency).
+Nmap scan report for telekomunikacja.agh.edu.pl (149.156.114.93)
+Host is up (0.0024s latency).
+Nmap scan report for gargamel.kt.agh.edu.pl (149.156.114.100)
+Host is up (0.0020s latency).
+Nmap scan report for arete.tele.agh.edu.pl (149.156.114.145)
+Host is up (0.0019s latency).
+Nmap scan report for jupyterhub.tele.agh.edu.pl (149.156.114.146)
+Host is up (0.0019s latency).
+Nmap scan report for cyberwave.agh.edu.pl (149.156.114.147)
+Host is up (0.0019s latency).
+Nmap scan report for dhcp150.kt.agh.edu.pl (149.156.114.150)
+Host is up (0.0022s latency).
+Nmap scan report for dhcp151.kt.agh.edu.pl (149.156.114.151)
+Host is up (0.0024s latency).
+Nmap scan report for dhcp152.kt.agh.edu.pl (149.156.114.152)
+Host is up (0.0024s latency).
+Nmap scan report for dhcp153.kt.agh.edu.pl (149.156.114.153)
+Host is up (0.0025s latency).
+Nmap scan report for dhcp156.kt.agh.edu.pl (149.156.114.156)
+Host is up (0.0025s latency).
+Nmap scan report for dhcp163.kt.agh.edu.pl (149.156.114.163)
+Host is up (0.0024s latency).
+Nmap scan report for dhcp164.kt.agh.edu.pl (149.156.114.164)
+Host is up (0.0024s latency).
+Nmap scan report for dhcp166.kt.agh.edu.pl (149.156.114.166)
+Host is up (0.0027s latency).
+Nmap scan report for test.detres.kt.agh.edu.pl (149.156.114.169)
+Host is up (0.0024s latency).
+Nmap scan report for dhcp173.kt.agh.edu.pl (149.156.114.173)
+Host is up (0.0025s latency).
+Nmap scan report for dhcp176.kt.agh.edu.pl (149.156.114.176)
+Host is up (0.0027s latency).
+Nmap scan report for dhcp199.kt.agh.edu.pl (149.156.114.199)
+Host is up (0.0026s latency).
+Nmap scan report for dhcp209.kt.agh.edu.pl (149.156.114.209)
+Host is up (0.0026s latency).
+Nmap scan report for dhcp220.kt.agh.edu.pl (149.156.114.220)
+Host is up (0.0025s latency).
+Nmap scan report for dhcp222.kt.agh.edu.pl (149.156.114.222)
+Host is up (0.0025s latency).
+Nmap done: 256 IP addresses (37 hosts up) scanned in 3.15 seconds

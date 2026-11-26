@@ -1,0 +1,30 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 12:22 CET
+Nmap scan report for kat-f2.bg.agh.edu.pl (149.156.113.12)
+Host is up (0.0035s latency).
+Nmap scan report for apus.bg.agh.edu.pl (149.156.113.14)
+Host is up (0.0067s latency).
+Nmap scan report for faro.bg.agh.edu.pl (149.156.113.16)
+Host is up (0.0067s latency).
+Nmap scan report for s68.bg.agh.edu.pl (149.156.113.68)
+Host is up (0.0029s latency).
+Nmap scan report for puchacz.bg.agh.edu.pl (149.156.113.71)
+Host is up (0.0063s latency).
+Nmap scan report for ns.bg.agh.edu.pl (149.156.113.101)
+Host is up (0.0078s latency).
+Nmap scan report for nimfa.bg.agh.edu.pl (149.156.113.109)
+Host is up (0.0025s latency).
+Nmap scan report for wbg.bg.agh.edu.pl (149.156.113.111)
+Host is up (0.0054s latency).
+Nmap scan report for wbg2.bg.agh.edu.pl (149.156.113.113)
+Host is up (0.0027s latency).
+Nmap scan report for wbg4.bg.agh.edu.pl (149.156.113.115)
+Host is up (0.0022s latency).
+Nmap scan report for b1rtr.bg.agh.edu.pl (149.156.113.250)
+Host is up (0.0027s latency).
+Nmap scan report for bg251.bg.agh.edu.pl (149.156.113.251)
+Host is up (0.0027s latency).
+Nmap scan report for 149.156.113.252
+Host is up (0.0022s latency).
+Nmap scan report for 149.156.113.254
+Host is up (0.0020s latency).
+Nmap done: 256 IP addresses (14 hosts up) scanned in 37.19 seconds

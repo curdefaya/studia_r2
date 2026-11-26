@@ -1,0 +1,600 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm,headheight=14pt]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{float}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!45!black,
+  urlcolor=blue!45!black,
+  pdftitle={Podstawy TCP/IP i skanowanie sieci za pomocą Nmap},
+  pdfauthor={},
+  pdfsubject={Sprawozdanie z ćwiczenia laboratoryjnego}
+}
+
+\definecolor{navy}{HTML}{183153}
+\definecolor{pale}{HTML}{EAF0F6}
+\definecolor{barblue}{HTML}{3973AC}
+\definecolor{muted}{HTML}{555555}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Sieci komputerowe -- ćwiczenie 4}
+\fancyhead[R]{\small Nmap}
+\fancyfoot[C]{\thepage}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.2}
+\setlist[itemize]{leftmargin=1.5em,itemsep=0.15em,topsep=0.2em}
+\setlist[enumerate]{leftmargin=1.7em,itemsep=0.2em,topsep=0.2em}
+
+\newcommand{\statbar}[3]{%
+  \texttt{#1} & \rule{#2cm}{0.85ex} & #3\\
+}
+\newcommand{\osbar}[3]{%
+  #1 & \rule{#2cm}{0.85ex} & #3\\
+}
+
+\begin{document}
+
+\begin{titlepage}
+\thispagestyle{empty}
+\vspace*{0.8cm}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{0.19\textwidth}|X|X|}
+\hline
+\textit{Grupa lab.} & \textit{Data wykonania} & \textit{Data odbioru}\\[1.2cm]
+\hline
+\multicolumn{3}{|l|}{\textit{Temat ćwiczenia: Podstawy TCP/IP, adresowania IP i skanowania sieci za pomocą Nmap}}\\[1.2cm]
+\hline
+\multicolumn{2}{|p{0.62\textwidth}|}{\textit{Imiona i nazwiska:} \vspace{0.7cm}} &
+\textit{Ocena i uwagi} \vspace{0.7cm}\\
+\hline
+\end{tabularx}
+
+\vspace{1.6cm}
+\begin{center}
+{\Large\bfseries\color{navy} SPRAWOZDANIE Z ĆWICZENIA LABORATORYJNEGO}\\[0.5cm]
+{\huge\bfseries Podstawy TCP/IP i skanowanie sieci za pomocą Nmap}\\[0.6cm]
+{\large Część praktyczna}
+\end{center}
+
+\vfill
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\textbf{Data wykonania pomiarów:} & 25 listopada 2026 r.\\
+\textbf{System i narzędzie:} & Ubuntu/Linux, Nmap 7.94SVN\\
+\textbf{Zakres opracowania:} & rozpoznawanie hostów, mapowanie DNS, skanowanie TCP SYN, rozpoznawanie usług i systemów operacyjnych\\
+\end{tabularx}
+\vspace{1.0cm}
+\end{titlepage}
+
+\section{Cel i zakres ćwiczenia}
+Celem ćwiczenia było praktyczne poznanie sposobów rozpoznawania hostów i usług w sieci
+z wykorzystaniem programu Nmap oraz powiązanie obserwowanych wyników z podstawami
+adresowania IPv4, protokołami TCP/IP i stanami portów. Wykonaliśmy skanowania listujące
+adresy i nazwy DNS (\texttt{-sL}), wykrywanie aktywnych hostów (\texttt{-sn}), skanowanie
+TCP SYN (\texttt{-sS}) oraz wybrane skanowania usług i systemów operacyjnych
+(\texttt{-sV}, \texttt{-O} i \texttt{-A}).
+
+Opracowanie obejmuje dane z dwóch zestawów pomiarowych: sieci prywatnej
+\texttt{192.168.102.0/24} oraz sześciu podsieci z zakresu \texttt{149.156.111.0/24}--
+\texttt{149.156.116.0/24}. Wyniki traktujemy jako migawkę stanu sieci z chwili pomiaru.
+Nie utożsamiamy nazw usług rozpoznawanych wyłącznie na podstawie numeru portu
+z potwierdzoną wersją oprogramowania.
+
+\section{Podstawy teoretyczne}
+\subsection{Adresacja i porty}
+Adres IPv4 identyfikuje interfejs w sieci i składa się z 32 bitów. Maska podsieci
+określa, która część adresu opisuje sieć, a która hosta. W pomiarach użyto podsieci
+\texttt{/24}; każda z nich obejmuje 256 adresów IPv4, z których część może być
+zarezerwowana na adres sieci i rozgłoszeniowy. Port TCP jest numerowanym punktem
+końcowym usługi działającej na hoście. Numer portu podpowiada możliwą usługę, ale sam
+w sobie nie potwierdza jej rodzaju ani wersji.
+
+\subsection{Zastosowane techniki}
+\begin{itemize}
+  \item \textbf{\texttt{-sL}} -- listowanie adresów z próbą uzyskania nazw DNS; nie
+        sprawdza, czy host odpowiada, ani nie bada portów.
+  \item \textbf{\texttt{-sn}} -- wykrywanie hostów bez skanowania portów. Wynik zależy
+        od dostępności użytych metod wykrywania i filtrów sieciowych.
+  \item \textbf{\texttt{-sS}} -- skanowanie TCP typu SYN. Odpowiedź SYN/ACK wskazuje
+        zwykle port otwarty, RST -- zamknięty, a brak odpowiedzi lub komunikat
+        niedostępności może skutkować klasyfikacją jako filtrowany.
+  \item \textbf{\texttt{-sV}} -- dodatkowe sondowanie otwartych portów w celu
+        rozpoznania usługi i, jeśli to możliwe, jej wersji.
+  \item \textbf{\texttt{-O}} -- próba określenia systemu operacyjnego na podstawie
+        cech odpowiedzi stosu sieciowego. Wynik jest szacunkiem, zależnym m.in. od
+        liczby i stanów dostępnych portów.
+  \item \textbf{\texttt{-A}} -- zestaw funkcji zwiększających szczegółowość
+        rozpoznania; w zebranych wynikach obejmował m.in. wykrywanie usług i systemu.
+\end{itemize}
+
+\section{Stanowisko i przebieg}
+\subsection{Sprzęt i oprogramowanie}
+Ćwiczenie wykonaliśmy na komputerze pracującym pod kontrolą systemu Linux
+(Ubuntu). Do pomiarów wykorzystaliśmy Nmap w wersji 7.94SVN. Wyniki zapisywaliśmy
+w plikach tekstowych; część przebiegu udokumentowaliśmy zrzutami ekranu terminala.
+
+\subsection{Przebieg prac}
+\begin{enumerate}
+  \item Zebraliśmy listy adresów i mapowania DNS dla wybranych podsieci za pomocą
+        skanowania listującego.
+  \item Wykryliśmy aktywne hosty w poszczególnych zakresach bez badania portów.
+  \item Dla wybranej listy ośmiu hostów z zakresu \texttt{149.156.116.0/24}
+        przeanalizowaliśmy stany portów TCP metodą SYN.
+  \item Dla ośmiu wybranych hostów z sieci \texttt{192.168.102.0/24} zebraliśmy
+        informacje o usługach; dla dwóch wykonaliśmy również szczegółowe skanowanie
+        typu \texttt{-A}.
+  \item Dla ośmiu wybranych hostów z zakresu \texttt{149.156.111.0/24} wykonaliśmy
+        próby rozpoznania systemu operacyjnego.
+  \item Zestawiliśmy liczbę aktywnych hostów, zaobserwowane porty i usługi,
+        a następnie oceniliśmy ograniczenia wnioskowania.
+\end{enumerate}
+
+\subsection{Schemat ćwiczenia}
+\begin{center}
+\small
+\begin{tabular}{c@{\hspace{0.15em}$\longrightarrow$\hspace{0.15em}}c@{\hspace{0.15em}$\longrightarrow$\hspace{0.15em}}c@{\hspace{0.15em}$\longrightarrow$\hspace{0.15em}}c}
+\fbox{\parbox[c][1.15cm][c]{0.18\textwidth}{\centering 1. Listowanie\\\texttt{-sL}}} &
+\fbox{\parbox[c][1.15cm][c]{0.18\textwidth}{\centering 2. Wykrywanie hostów\\\texttt{-sn}}} &
+\fbox{\parbox[c][1.15cm][c]{0.18\textwidth}{\centering 3. Stany portów TCP\\\texttt{-sS}}} &
+\fbox{\parbox[c][1.15cm][c]{0.18\textwidth}{\centering 4. Usługi i system\\\texttt{-sV}, \texttt{-O}}}
+\end{tabular}
+\end{center}
+
+\begin{table}[H]
+\centering
+\caption{Zakresy i rodzaje dostępnych pomiarów}
+\begin{tabularx}{\textwidth}{>{\ttfamily}l X X}
+\toprule
+\normalfont\textbf{Zakres} & \textbf{Zebrane dane} & \textbf{Uwagi}\\
+\midrule
+192.168.102.0/24 & \texttt{-sL}, \texttt{-sn}; wybrane \texttt{-sV} i \texttt{-A} &
+61 hostów wykrytych jako aktywne; usługi zbadano na wybranych hostach.\\
+149.156.111.0/24 & \texttt{-sL}, \texttt{-sn}; wybrane \texttt{-O} &
+26 hostów aktywnych; osiem raportów prób identyfikacji systemu.\\
+149.156.112.0/24 & \texttt{-sL}, \texttt{-sn} &
+20 hostów aktywnych.\\
+149.156.113.0/24 & \texttt{-sL}, \texttt{-sn} &
+14 hostów aktywnych.\\
+149.156.114.0/24 & \texttt{-sL}, \texttt{-sn} &
+37 hostów aktywnych.\\
+149.156.115.0/24 & \texttt{-sL}, \texttt{-sn} &
+22 hosty aktywne.\\
+149.156.116.0/24 & \texttt{-sL}, \texttt{-sn}; wybrane \texttt{-sS} &
+13 hostów aktywnych; skan SYN dotyczył ośmiu wybranych hostów.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Wyniki pomiarów}
+\subsection{Wykrywanie hostów i mapowanie DNS}
+W sześciu analizowanych podsieciach publicznych wykryliśmy łącznie 132 aktywne
+adresy spośród 1536 sprawdzonych adresów (około
+8{,}6\%). W sieci prywatnej \texttt{192.168.102.0/24} wykryliśmy 61 hostów spośród
+256 adresów (około 23{,}8\%). Wartości te opisują wyłącznie odpowiedzi rozpoznane
+przez Nmap w chwili skanowania, a nie pełną liczbę urządzeń fizycznie obecnych
+w sieci.
+
+Wyniki uzyskaliśmy poleceniami wykrywania hostów dla kolejnych podsieci
+\texttt{/24}; odpowiadają im pliki \texttt{c\_sn.txt} oraz
+\texttt{c\_112sn.txt}--\texttt{c\_116sn.txt}. W każdym skanowaniu sprawdzono 256
+adresów. Dla przykładu w \texttt{149.156.116.0/24} Nmap zgłosił 13 hostów
+aktywnych w czasie 4{,}34 s, a w \texttt{192.168.102.0/24} -- 61 hostów
+w czasie 1{,}59 s. Polecenia listujące DNS odpowiadają plikom
+\texttt{c\_sL.txt} oraz \texttt{c\_112sL.txt}--\texttt{c\_116sL.txt}.
+W trybie \texttt{-sL} Nmap wypisał mapowania dla badanych adresów, ale
+podsumowanie wynosiło 0 aktywnych hostów, ponieważ ten tryb nie wykonuje
+sprawdzenia dostępności.
+
+\begin{table}[H]
+\centering
+\caption{Przykładowe mapowania DNS odczytane z listowania podsieci
+\texttt{149.156.112.0/24}}
+\begin{tabular}{ll}
+\toprule
+\textbf{Adres IP} & \textbf{Nazwa zwrócona przez DNS}\\
+\midrule
+\texttt{149.156.112.6} & \texttt{krywan.metal.agh.edu.pl}\\
+\texttt{149.156.112.13} & \texttt{umbreon.metal.agh.edu.pl}\\
+\texttt{149.156.112.15} & \texttt{metal.metal.agh.edu.pl}\\
+\texttt{149.156.112.16} & \texttt{cmms-edit.agh.edu.pl}\\
+\texttt{149.156.112.42} & \texttt{willow.metal.agh.edu.pl}\\
+\texttt{149.156.112.124} & \texttt{www.futurestudent.agh.edu.pl}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Liczba aktywnych hostów wykrytych w skanowaniu \texttt{-sn}}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Podsieć} & \textbf{Aktywne hosty} & \textbf{Udział w 256 adresach}\\
+\midrule
+\texttt{149.156.111.0/24} & 26 & 10{,}2\%\\
+\texttt{149.156.112.0/24} & 20 & 7{,}8\%\\
+\texttt{149.156.113.0/24} & 14 & 5{,}5\%\\
+\texttt{149.156.114.0/24} & 37 & 14{,}5\%\\
+\texttt{149.156.115.0/24} & 22 & 8{,}6\%\\
+\texttt{149.156.116.0/24} & 13 & 5{,}1\%\\
+\midrule
+\textbf{Suma sześciu podsieci} & \textbf{132} & \textbf{8{,}6\% z 1536}\\
+\texttt{192.168.102.0/24} & 61 & 23{,}8\%\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Wyniki \texttt{-sL} zawierają odpowiedzi resolvera dla części adresów i nazwy
+kanoniczne hostów. Podsumowanie Nmapa dla tego trybu podaje zero aktywnych hostów;
+jest to oczekiwane, ponieważ \texttt{-sL} nie wykonuje testu dostępności. Brak
+nazwy DNS przy adresie nie oznacza, że adres jest nieaktywny.
+
+\subsection{Skanowanie TCP SYN ośmiu hostów}
+Polecenie widoczne na zrzucie z terminala miało postać
+\texttt{sudo nmap -sS -iL lista\_skan\_sS.txt}. Dla ośmiu hostów z listy
+pomiarowej w podsieci \texttt{149.156.116.0/24} raporty
+wykazały 22 otwarte porty TCP i trzy jawnie wypisane porty filtrowane. Dodatkowe
+podsumowania Nmapa wskazują filtrowanie znacznej części skanowanych portów na
+czterech z ośmiu hostów. Na pozostałych hostach przeważały porty zamknięte.
+W tabeli częstości poniżej uwzględniliśmy wszystkie 22 otwarte porty, nie zaś
+liczbę unikatowych nazw hostów.
+
+Pełny wynik zapisano w pliku \texttt{skan\_listy\_8el.txt}. Tabela przedstawia
+stany portów host po hoście, dzięki czemu widoczne jest, które usługi
+odpowiadały na sondy, a które były filtrowane.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Wyniki skanowania SYN zapisane w \texttt{skan\_listy\_8el.txt}}
+\begin{tabularx}{\textwidth}{>{\ttfamily}l X}
+\toprule
+\normalfont\textbf{Host} & \textbf{Wynik: otwarte porty / inne stany}\\
+\midrule
+149.156.116.12 &
+21/tcp \textit{open} (ftp), 80/tcp \textit{open} (http); pozostałe 998 portów zamknięte.\\
+149.156.116.17 &
+21/tcp \textit{open} (ftp), 80/tcp \textit{open} (http); pozostałe 998 portów zamknięte.\\
+149.156.116.76 &
+21/tcp \textit{open} (ftp); pozostałe 999 portów filtrowane (bez odpowiedzi).\\
+149.156.116.129 &
+135/tcp (msrpc), 139/tcp (netbios-ssn) i 445/tcp (microsoft-ds) \textit{filtered}; pozostałe 997 portów zamknięte.\\
+149.156.116.133 &
+22/tcp (ssh), 23/tcp (telnet), 80/tcp (http) \textit{open}; pozostałe 997 portów filtrowane.\\
+149.156.116.136 &
+21/tcp (ftp), 23/tcp (telnet), 80/tcp (http), 139/tcp (netbios-ssn), 514/tcp (shell), 515/tcp (printer), 631/tcp (ipp), 7443/tcp (oracleas-https), 9100/tcp (jetdirect) \textit{open}; pozostałe 991 zamknięte.\\
+149.156.116.137 &
+53/tcp (domain), 1723/tcp (pptp), 2000/tcp (cisco-sccp), 8291/tcp (unknown) \textit{open}; pozostałe 996 zamknięte.\\
+149.156.116.199 &
+21/tcp \textit{open} (ftp); pozostałe 999 portów filtrowane (bez odpowiedzi).\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Najczęściej rozpoznane usługi w ośmiu raportach \texttt{-sS}}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Usługa (etykieta Nmapa)} & \textbf{Liczba otwartych portów} & \textbf{Udział w 22}\\
+\midrule
+\texttt{ftp} & 5 & 22{,}7\%\\
+\texttt{http} & 4 & 18{,}2\%\\
+\texttt{telnet} & 2 & 9{,}1\%\\
+\texttt{ssh} & 1 & 4{,}5\%\\
+\texttt{netbios-ssn} & 1 & 4{,}5\%\\
+\texttt{shell} & 1 & 4{,}5\%\\
+\texttt{printer} & 1 & 4{,}5\%\\
+\texttt{ipp} & 1 & 4{,}5\%\\
+\texttt{oracleas-https} & 1 & 4{,}5\%\\
+\texttt{jetdirect} & 1 & 4{,}5\%\\
+\texttt{domain} & 1 & 4{,}5\%\\
+\texttt{pptp} & 1 & 4{,}5\%\\
+\texttt{cisco-sccp} & 1 & 4{,}5\%\\
+\texttt{unknown} & 1 & 4{,}5\%\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{l l r}
+\textbf{Usługa} & \textbf{Liczba otwartych portów} & \textbf{n}\\
+\statbar{ftp}{2.5}{5}
+\statbar{http}{2.0}{4}
+\statbar{telnet}{1.0}{2}
+\statbar{pozostałe}{0.5}{1 każda}
+\end{tabular}
+\caption{Wykres częstości usług w wybranym zbiorze ośmiu hostów. Każda z pozostałych
+dziesięciu etykiet wystąpiła jeden raz.}
+\end{figure}
+
+\subsection{Wybrane skanowania usług i systemów operacyjnych}
+W ośmiu skanowaniach usług hostów z sieci prywatnej odnotowaliśmy łącznie 39
+otwartych portów. Najczęściej Nmap wskazywał \texttt{msrpc} (12 razy) i
+\texttt{flexlm} (6 razy), następnie \texttt{ssh} oraz \texttt{netbios-ssn}
+(po 4 razy), a także \texttt{microsoft-ds} i \texttt{http} (po 3 razy).
+Są to częstości etykiet usług w wynikach, a nie liczba unikatowych hostów.
+Poniżej zestawiliśmy konkretny wynik każdego skanowania z plików
+\texttt{sV150.txt}, \texttt{sV165.txt}, \texttt{sV196.txt},
+\texttt{sV199.txt}, \texttt{sV247.txt}, \texttt{sV249.txt},
+\texttt{sV250.txt} i \texttt{sV253.txt}. Wersje oprogramowania podajemy
+tylko tam, gdzie Nmap faktycznie je rozpoznał.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Otwarte porty i rozpoznane usługi w ośmiu skanowaniach
+\texttt{-sV} w sieci prywatnej}
+\begin{tabularx}{\textwidth}{>{\ttfamily}l X}
+\toprule
+\normalfont\textbf{Host} & \textbf{Otwarte porty TCP i identyfikacja}\\
+\midrule
+192.168.102.150 &
+22/ssh -- OpenSSH 9.6p1, Ubuntu; system Linux.\\
+192.168.102.165 &
+135/msrpc, 139/netbios-ssn, 445/microsoft-ds, 1947/http (HASP LM 17.00), 3389/ms-wbt-server, 25734/flexlm, 25735/flexlm, 27000/flexlm.\\
+192.168.102.196 &
+22/ssh -- OpenSSH 9.6p1, Ubuntu; system Linux.\\
+192.168.102.199 &
+22/ssh -- OpenSSH 9.6p1, Ubuntu; system Linux.\\
+192.168.102.247 &
+135/msrpc, 139/netbios-ssn, 445/microsoft-ds (niepewna etykieta), 5357/http -- Microsoft HTTPAPI 2.0.\\
+192.168.102.249 &
+135/msrpc, 139/netbios-ssn, 445/microsoft-ds, 1025/msrpc, 1026/msrpc, 27000/flexlm.\\
+192.168.102.250 &
+135/msrpc, 139/netbios-ssn, 445/microsoft-ds, 3389/ms-wbt-server, 5666/tcpwrapped, 9102/jetdirect, 27000/flexlm, 49152/msrpc, 49153/msrpc, 49156/msrpc, 49163/msrpc, 49165/msrpc, 49167/msrpc, 49176/flexlm.\\
+192.168.102.253 &
+22/ssh -- OpenSSH 7.4; 80/http -- Apache httpd 2.4.6 (CentOS); 111/rpcbind; 6000/X11 (dostęp zablokowany).\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+W dwóch szczegółowych raportach z sieci prywatnej Nmap rozpoznał systemy
+z rodziny Microsoft Windows Server: dla adresu \texttt{192.168.102.165}
+Windows Server 2019, a dla \texttt{192.168.102.250} Windows Server 2008 R2.
+W drugim przypadku część ogólnego dopasowania systemu była niejednoznaczna;
+szczegółowa informacja pojawiła się w wynikach rozpoznawania SMB. Z tego powodu
+traktujemy te identyfikacje jako wskazówki zebrane w konkretnym pomiarze, a nie
+niezależnie potwierdzoną inwentaryzację systemów.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Dodatkowe ustalenia z dwóch szczegółowych skanowań \texttt{-A}}
+\begin{tabularx}{\textwidth}{>{\ttfamily}l X}
+\toprule
+\normalfont\textbf{Host} & \textbf{Wynik skanowania i szczegóły rozpoznania}\\
+\midrule
+192.168.102.165 &
+8 otwartych portów, 992 zamknięte; Windows Server 2019 Standard 17763, nazwa komputera CHARIZARD. Rozpoznano m.in. serwer licencji HASP LM 17.00 na 1947/tcp, RDP na 3389/tcp oraz FlexLM na 25734/tcp, 25735/tcp i 27000/tcp. Czas skanowania: 31,14 s.\\
+192.168.102.250 &
+14 otwartych portów, 986 zamkniętych; szczegółowa identyfikacja SMB wskazała Windows Server 2008 R2 Enterprise 7600, nazwę Procast-SIM i grupę WORKGROUP. Wykryto m.in. RPC, RDP, FlexLM oraz porty dynamiczne RPC. Czas skanowania: 93,16 s.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{l l r}
+\textbf{Usługa} & \textbf{Liczba rozpoznań} & \textbf{n}\\
+\statbar{msrpc}{2.4}{12}
+\statbar{flexlm}{1.2}{6}
+\statbar{ssh}{0.8}{4}
+\statbar{netbios-ssn}{0.8}{4}
+\statbar{microsoft-ds}{0.6}{3}
+\statbar{http}{0.6}{3}
+\end{tabular}
+\caption{Najczęstsze etykiety usług w ośmiu skanowaniach \texttt{-sV}
+w sieci \texttt{192.168.102.0/24}. Pozostałe etykiety wystąpiły łącznie
+siedem razy.}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Wynik identyfikacji systemu w dwóch szczegółowych skanowaniach}
+\begin{tabular}{lll}
+\toprule
+\textbf{Adres} & \textbf{Rozpoznany system} & \textbf{Ocena wyniku}\\
+\midrule
+\texttt{192.168.102.165} & Windows Server 2019 & szczegółowe dopasowanie Nmap/SMB\\
+\texttt{192.168.102.250} & Windows Server 2008 R2 & część dopasowania ogólnego niejednoznaczna\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{l l r}
+\textbf{Rozpoznany system} & \textbf{Liczba hostów} & \textbf{n}\\
+\osbar{Windows Server 2019}{1.0}{1}
+\osbar{Windows Server 2008 R2}{1.0}{1}
+\end{tabular}
+\caption{Systemy rozpoznane w dwóch szczegółowych skanowaniach w sieci prywatnej.
+Próba jest zbyt mała, aby wnioskować o udziale systemów w całej sieci.}
+\end{figure}
+
+Dla ośmiu hostów z podsieci \texttt{149.156.111.0/24} zachowały się raporty
+\texttt{-O} w plikach \texttt{c\_wyn1.txt}--\texttt{c\_wyn8.txt}. W większości
+przypadków Nmap nie wskazał jednego pewnego systemu: w raportach powtarza się
+przypuszczenie o urządzeniu typu Digi PortServer (85--90\%) oraz alternatywne
+dopasowania Windows lub FreeBSD. Tylko ostatni raport nie zawierał wyniku
+identyfikacji OS. Szczegóły widoczne w raportach zebraliśmy poniżej.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\caption{Porty i przypuszczenia dotyczące systemu w wynikach \texttt{-O}
+dla ośmiu hostów publicznych}
+\begin{tabularx}{\textwidth}{>{\ttfamily}l X X}
+\toprule
+\normalfont\textbf{Host} & \textbf{Otwarte porty TCP} & \textbf{Wynik OS / filtrowanie}\\
+\midrule
+149.156.111.104 &
+21/ftp, 443/https &
+Windows 7 / Server 2008 (87\%); bez dokładnego dopasowania; 998 filtrowanych.\\
+149.156.111.149 &
+21/ftp, 22/ssh; 8000/tcp zamknięty &
+FreeBSD 6.2 (88\%) lub Windows Server 2008 (87\%); bez dokładnego dopasowania; 997 filtrowanych.\\
+149.156.111.212 &
+21/ftp &
+Digi PortServer (90\%); bez dokładnego dopasowania; 999 filtrowanych.\\
+149.156.111.53 &
+21/ftp, 22/ssh, 80/http, 113/ident, 443/https &
+FreeBSD 6.2 (88\%); bez dokładnego dopasowania; 991 filtrowanych.\\
+149.156.111.36 &
+21/ftp, 80/http, 443/https &
+Digi PortServer (90\%); bez dokładnego dopasowania; 997 filtrowanych.\\
+149.156.111.191 &
+21/ftp &
+Digi PortServer (90\%); bez dokładnego dopasowania; 999 filtrowanych.\\
+149.156.111.172 &
+21/ftp &
+Digi PortServer (90\%); bez dokładnego dopasowania; 999 filtrowanych.\\
+149.156.111.162 &
+21/ftp, 80/http, 99/metagram, 5000/upnp &
+Brak wyniku identyfikacji OS; 996 portów zamkniętych.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Podane procenty oznaczają poziom dopasowania hipotezy Nmapa, a nie prawdopodobieństwo
+potwierdzone niezależnym pomiarem. W siedmiu raportach systemu nie udało się
+zidentyfikować jednoznacznie, m.in. z powodu licznych portów filtrowanych.
+
+\section{Opracowanie i interpretacja wyników}
+\begin{enumerate}
+  \item Najwięcej hostów spośród sześciu analizowanych podsieci wykryliśmy w sieci
+        \texttt{149.156.114.0/24} (37), najmniej w \texttt{149.156.116.0/24}
+        (13). Różnice pokazują, że liczba aktywnych adresów istotnie zależy od
+        konkretnego segmentu.
+  \item Skanowanie listujące i wykrywanie hostów odpowiadają na różne pytania.
+        \texttt{-sL} pozwala zestawiać adresy z nazwami, ale nie potwierdza
+        dostępności. \texttt{-sn} szacuje liczbę odpowiadających hostów, ale
+        odpowiedź może być blokowana przez zaporę albo zależna od bieżącego stanu
+        urządzenia.
+  \item W próbce ośmiu hostów poddanych \texttt{-sS} najczęstszą etykietą usługi
+        było \texttt{ftp}, a następnie \texttt{http}. Zarejestrowano również
+        \texttt{telnet} oraz usługi związane m.in. z drukowaniem i zarządzaniem
+        urządzeniami. Ze względu na małą, celowo wybraną próbę nie ekstrapolujemy
+        tych proporcji na całą podsieć.
+  \item Na czterech z ośmiu badanych hostów Nmap raportował filtrowanie części
+        portów. Stan filtrowany oznacza, że skaner nie uzyskał odpowiedzi
+        pozwalającej rozstrzygnąć, czy port jest otwarty, czy zamknięty; nie jest
+        równoznaczny z potwierdzoną luką ani awarią.
+  \item Rozpoznawanie usług przez \texttt{-sV} dostarczyło więcej informacji
+        niż samo przypisanie nazwy do numeru portu. Identyfikacja systemu
+        operacyjnego była mniej pewna i zależała od warunków skanowania oraz
+        dostępnych odpowiedzi hosta.
+\end{enumerate}
+
+\subsection{Ograniczenia i kompletność materiału}
+W przekazanym zbiorze nie ma pliku z wynikami UDP, przechwycenia \texttt{p0f}
+ani parametrów konfiguracji interfejsu komputera (adresu, maski, bramy i DNS).
+Nie uzupełniamy tych pozycji na podstawie przypuszczeń. Skanowania usług i systemów
+wykonaliśmy tylko dla wybranych hostów; zatem nie są one pełną inwentaryzacją
+żadnej z podsieci. Zestawy \texttt{-sV}, \texttt{-A}, \texttt{-O} i \texttt{-sS}
+różnią się zakresem oraz celem, dlatego ich wyników nie sumujemy w jedną wspólną
+statystykę.
+
+\section{Wnioski}
+\begin{enumerate}
+  \item Zrealizowane pomiary pozwoliły nam przećwiczyć rozdzielenie trzech zadań:
+        listowania adresów i DNS, wykrywania aktywności hostów oraz badania
+        portów i usług.
+  \item W sześciu zebranych podsieciach \texttt{/24} wykryliśmy łącznie 132
+        aktywne adresy, natomiast w prywatnej sieci \texttt{192.168.102.0/24}
+        -- 61. Są to liczby hostów odpowiadających na zastosowane sondy, a nie
+        bezwarunkowo pełne liczebności sieci.
+  \item W ośmiu raportach SYN zarejestrowaliśmy 22 otwarte porty; najczęściej
+        występowały etykiety \texttt{ftp} i \texttt{http}. Jednocześnie cztery
+        hosty wykazywały filtrowanie, co potwierdza, że interpretując brak
+        odpowiedzi, należy odróżniać stan \textit{filtered} od
+        \textit{closed}.
+  \item Skanowanie wersji usług i identyfikacja systemu operacyjnego uzupełniają
+        obraz hosta, ale wyniki Nmapa pozostają estymacją. W szczególności
+        niejednoznacznych dopasowań OS nie należy przedstawiać jako pewnych.
+  \item Wnioski o popularności usług odnoszą się do małej, wybranej próbki.
+        Nie przenosimy ich na całą podsieć. W następnym uzupełnieniu raportu
+        dołączymy skany podpisanych notatek z zajęć oraz, jeśli będą dostępne,
+        brakujące wyniki i dane konfiguracyjne.
+\end{enumerate}
+
+\clearpage
+\section*{Załącznik A. Zrzuty ekranu z ćwiczenia}
+Poniższe zrzuty dokumentują kolejne etapy pracy z Nmapem. Zestawiliśmy je
+z odpowiednimi plikami tekstowymi: obrazy pokazują polecenia i fragmenty
+interaktywnego wyniku, natomiast kompletne liczby hostów i portów w tabelach
+przepisaliśmy z zapisanych raportów.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]
+  {\detokenize{dane_bedkowski/zdjecia_ss/Zrzut ekranu z 2026-11-25 12-43-02.png}}
+\caption{Skanowanie podsieci \texttt{149.156.115.0/24}. U góry widzimy
+podsumowanie wcześniejszego wykrywania hostów: 22 adresy aktywne z 256.
+Niżej uruchomiono listowanie \texttt{-sL} i zapis wyniku do
+\texttt{c\_115sL.txt}; wypisane nazwy, np. \texttt{emi.wibro.agh.edu.pl},
+pochodzą z mapowania DNS.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]
+  {\detokenize{dane_bedkowski/zdjecia_ss/Zrzut ekranu z 2026-11-25 12-43-19.png}}
+\caption{Dwa uzupełniające się wyniki dla \texttt{149.156.116.0/24}.
+Listowanie DNS kończy się komunikatem \texttt{0 hosts up}, co nie oznacza,
+że adresy są nieaktywne. Następne polecenie \texttt{-sn} wykrywa 13
+odpowiadających hostów; widoczne nazwy to m.in. \texttt{dzk.ceramika.agh.edu.pl}
+i \texttt{a3-09.gorn.agh.edu.pl}.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]
+  {\detokenize{dane_bedkowski/zdjecia_ss/Zrzut ekranu z 2026-11-25 12-43-30.png}}
+\caption{Powtórne wyświetlenie wykrywania aktywnych hostów i listowania DNS
+w podsieci \texttt{149.156.116.0/24}. Na dole widoczna jest nieudana próba
+użycia opcji \texttt{-iL} z adresem IP zamiast ścieżki do pliku listy.
+Komunikat o błędzie otwarcia pliku oznacza, że ta próba nie jest wynikiem
+skanowania hosta i nie została włączona do opracowania.}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth,height=0.36\textheight,keepaspectratio]
+  {\detokenize{dane_bedkowski/zdjecia_ss/Zrzut ekranu z 2026-11-25 12-43-39.png}}
+\caption{Skan SYN listy zapisanej w \texttt{lista\_skan\_sS.txt}. Najpierw
+pokazano wynik dla \texttt{149.156.116.12}: otwarte porty 21/tcp (FTP) i
+80/tcp (HTTP). Następnie widoczne jest uruchomienie skanowania listy;
+na kolejnych hostach obserwujemy m.in. porty filtrowane na
+\texttt{149.156.116.129}. Pełne wyniki wszystkich ośmiu hostów znajdują się
+w tabeli opracowanej z \texttt{skan\_listy\_8el.txt}.}
+\end{figure}
+
+\clearpage
+\section*{Załącznik B. Podpisane notatki z zajęć}
+\begin{center}
+\vspace*{3cm}
+\fcolorbox{navy}{pale}{%
+  \parbox{0.82\textwidth}{%
+    \centering
+    \vspace{1.2cm}
+    \textbf{\Large Miejsce na skany podpisanych notatek}\\[0.6cm]
+    Skany zostaną dołączone na ostatniej stronie po ich otrzymaniu.\\
+    Na tym etapie załącznik jest celowo pozostawiony jako miejsce do uzupełnienia.
+    \vspace{1.2cm}
+  }%
+}
+\end{center}
+
+\end{document}

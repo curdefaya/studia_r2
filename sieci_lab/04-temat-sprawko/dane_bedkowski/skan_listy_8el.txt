@@ -1,0 +1,67 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 12:35 CET
+Nmap scan report for dzk.ceramika.agh.edu.pl (149.156.116.12)
+Host is up (0.0067s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE
+21/tcp open  ftp
+80/tcp open  http
+
+Nmap scan report for 149.156.116.17
+Host is up (0.044s latency).
+Not shown: 998 closed tcp ports (reset)
+PORT   STATE SERVICE
+21/tcp open  ftp
+80/tcp open  http
+
+Nmap scan report for 149.156.116.76
+Host is up (0.00099s latency).
+Not shown: 999 filtered tcp ports (no-response)
+PORT   STATE SERVICE
+21/tcp open  ftp
+
+Nmap scan report for a3-02.gorn.agh.edu.pl (149.156.116.129)
+Host is up (0.0016s latency).
+Not shown: 997 closed tcp ports (reset)
+PORT    STATE    SERVICE
+135/tcp filtered msrpc
+139/tcp filtered netbios-ssn
+445/tcp filtered microsoft-ds
+
+Nmap scan report for a3-06.gorn.agh.edu.pl (149.156.116.133)
+Host is up (0.0056s latency).
+Not shown: 997 filtered tcp ports (no-response)
+PORT   STATE SERVICE
+22/tcp open  ssh
+23/tcp open  telnet
+80/tcp open  http
+
+Nmap scan report for a3-09.gorn.agh.edu.pl (149.156.116.136)
+Host is up (0.0018s latency).
+Not shown: 991 closed tcp ports (reset)
+PORT     STATE SERVICE
+21/tcp   open  ftp
+23/tcp   open  telnet
+80/tcp   open  http
+139/tcp  open  netbios-ssn
+514/tcp  open  shell
+515/tcp  open  printer
+631/tcp  open  ipp
+7443/tcp open  oracleas-https
+9100/tcp open  jetdirect
+
+Nmap scan report for a3-10.gorn.agh.edu.pl (149.156.116.137)
+Host is up (0.0030s latency).
+Not shown: 996 closed tcp ports (reset)
+PORT     STATE SERVICE
+53/tcp   open  domain
+1723/tcp open  pptp
+2000/tcp open  cisco-sccp
+8291/tcp open  unknown
+
+Nmap scan report for zmb32.ceramika.agh.edu.pl (149.156.116.199)
+Host is up (0.00099s latency).
+Not shown: 999 filtered tcp ports (no-response)
+PORT   STATE SERVICE
+21/tcp open  ftp
+
+Nmap done: 8 IP addresses (8 hosts up) scanned in 66.97 seconds

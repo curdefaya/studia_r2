@@ -1,0 +1,22 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 11:54 CET
+Nmap scan report for ziam.metal.agh.edu.pl (149.156.111.53)
+Host is up (0.0011s latency).
+Not shown: 990 filtered tcp ports (no-response), 1 filtered tcp ports (port-unreach)
+PORT    STATE  SERVICE
+20/tcp  closed ftp-data
+21/tcp  open   ftp
+22/tcp  open   ssh
+23/tcp  closed telnet
+25/tcp  closed smtp
+80/tcp  open   http
+110/tcp closed pop3
+113/tcp open   ident
+443/tcp open   https
+Device type: general purpose
+Running (JUST GUESSING): FreeBSD 6.X (88%), Microsoft Windows 2008 (86%)
+OS CPE: cpe:/o:freebsd:freebsd:6.2 cpe:/o:microsoft:windows_server_2008::beta3 cpe:/o:microsoft:windows_server_2008
+Aggressive OS guesses: FreeBSD 6.2-RELEASE (88%), Microsoft Windows Server 2008 or 2008 Beta 3 (86%)
+No exact OS matches for host (test conditions non-ideal).
+
+OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.26 seconds

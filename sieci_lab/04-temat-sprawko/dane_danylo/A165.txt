@@ -1,0 +1,120 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 12:26 CET
+NSE: Loaded 156 scripts for scanning.
+NSE: Script Pre-scanning.
+Initiating NSE at 12:26
+Completed NSE at 12:26, 0.00s elapsed
+Initiating NSE at 12:26
+Completed NSE at 12:26, 0.00s elapsed
+Initiating NSE at 12:26
+Completed NSE at 12:26, 0.00s elapsed
+Initiating ARP Ping Scan at 12:26
+Scanning 192.168.102.165 [1 port]
+Completed ARP Ping Scan at 12:26, 0.03s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 12:26
+Completed Parallel DNS resolution of 1 host. at 12:26, 0.00s elapsed
+Initiating SYN Stealth Scan at 12:26
+Scanning 192.168.102.165 [1000 ports]
+Discovered open port 139/tcp on 192.168.102.165
+Discovered open port 445/tcp on 192.168.102.165
+Discovered open port 135/tcp on 192.168.102.165
+Discovered open port 3389/tcp on 192.168.102.165
+Discovered open port 25734/tcp on 192.168.102.165
+Discovered open port 25735/tcp on 192.168.102.165
+Discovered open port 1947/tcp on 192.168.102.165
+Discovered open port 27000/tcp on 192.168.102.165
+Completed SYN Stealth Scan at 12:26, 2.64s elapsed (1000 total ports)
+Initiating Service scan at 12:26
+Scanning 8 services on 192.168.102.165
+Completed Service scan at 12:27, 22.09s elapsed (8 services on 1 host)
+Initiating OS detection (try #1) against 192.168.102.165
+NSE: Script scanning 192.168.102.165.
+Initiating NSE at 12:27
+Completed NSE at 12:27, 5.08s elapsed
+Initiating NSE at 12:27
+Completed NSE at 12:27, 0.06s elapsed
+Initiating NSE at 12:27
+Completed NSE at 12:27, 0.00s elapsed
+Nmap scan report for 192.168.102.165
+Host is up (0.00082s latency).
+Not shown: 992 closed tcp ports (reset)
+PORT      STATE SERVICE       VERSION
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds  Windows Server 2019 Standard 17763 microsoft-ds
+1947/tcp  open  http          Aladdin/SafeNet HASP license manager 17.00
+|_http-title: 403 Forbidden
+| http-methods: 
+|_  Supported Methods: GET HEAD POST
+|_http-server-header: HASP LM/17.00
+3389/tcp  open  ms-wbt-server Microsoft Terminal Services
+|_ssl-date: 2026-11-25T11:27:07+00:00; 0s from scanner time.
+| ssl-cert: Subject: commonName=charizard
+| Issuer: commonName=charizard
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2026-11-12T16:51:16
+| Not valid after:  2027-05-14T16:51:16
+| MD5:   4419:fdd3:a1e1:54ce:f5a0:ed81:9c45:28f8
+|_SHA-1: a579:40e0:7206:194f:289d:e90f:eff0:616d:170c:78f5
+| rdp-ntlm-info: 
+|   Target_Name: CHARIZARD
+|   NetBIOS_Domain_Name: CHARIZARD
+|   NetBIOS_Computer_Name: CHARIZARD
+|   DNS_Domain_Name: charizard
+|   DNS_Computer_Name: charizard
+|   Product_Version: 10.0.17763
+|_  System_Time: 2026-11-25T11:27:01+00:00
+25734/tcp open  flexlm        FlexLM license manager
+25735/tcp open  flexlm        FlexLM license manager
+27000/tcp open  flexlm        FlexLM license manager
+MAC Address: 00:15:5D:66:01:04 (Microsoft)
+Device type: general purpose
+Running: Microsoft Windows 2019
+OS details: Microsoft Windows Server 2019
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=254 (Good luck!)
+IP ID Sequence Generation: Incremental
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-time: 
+|   date: 2026-11-25T11:27:01
+|_  start_date: N/A
+| smb2-security-mode: 
+|   3:1:1: 
+|_    Message signing enabled but not required
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+| nbstat: NetBIOS name: CHARIZARD, NetBIOS user: <unknown>, NetBIOS MAC: 00:15:5d:66:01:04 (Microsoft)
+| Names:
+|   METAL<00>            Flags: <group><active>
+|   CHARIZARD<00>        Flags: <unique><active>
+|   CHARIZARD<20>        Flags: <unique><active>
+|_  METAL<1e>            Flags: <group><active>
+|_clock-skew: mean: -12m00s, deviation: 26m50s, median: -1s
+| smb-os-discovery: 
+|   OS: Windows Server 2019 Standard 17763 (Windows Server 2019 Standard 6.3)
+|   Computer name: charizard
+|   NetBIOS computer name: CHARIZARD\x00
+|   Workgroup: METAL\x00
+|_  System time: 2026-11-25T12:27:01+01:00
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   0.82 ms 192.168.102.165
+
+NSE: Script Post-scanning.
+Initiating NSE at 12:27
+Completed NSE at 12:27, 0.00s elapsed
+Initiating NSE at 12:27
+Completed NSE at 12:27, 0.00s elapsed
+Initiating NSE at 12:27
+Completed NSE at 12:27, 0.00s elapsed
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 31.14 seconds
+           Raw packets sent: 1158 (51.650KB) | Rcvd: 1017 (41.338KB)

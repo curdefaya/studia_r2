@@ -1,0 +1,124 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 12:27 CET
+NSE: Loaded 156 scripts for scanning.
+NSE: Script Pre-scanning.
+Initiating NSE at 12:27
+Completed NSE at 12:27, 0.00s elapsed
+Initiating NSE at 12:27
+Completed NSE at 12:27, 0.00s elapsed
+Initiating NSE at 12:27
+Completed NSE at 12:27, 0.00s elapsed
+Initiating ARP Ping Scan at 12:27
+Scanning 192.168.102.250 [1 port]
+Completed ARP Ping Scan at 12:27, 0.03s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 12:27
+Completed Parallel DNS resolution of 1 host. at 12:27, 0.00s elapsed
+Initiating SYN Stealth Scan at 12:27
+Scanning 192.168.102.250 [1000 ports]
+Discovered open port 139/tcp on 192.168.102.250
+Discovered open port 3389/tcp on 192.168.102.250
+Increasing send delay for 192.168.102.250 from 0 to 5 due to 51 out of 169 dropped probes since last increase.
+Discovered open port 445/tcp on 192.168.102.250
+Discovered open port 135/tcp on 192.168.102.250
+Discovered open port 49153/tcp on 192.168.102.250
+Discovered open port 49176/tcp on 192.168.102.250
+Discovered open port 49167/tcp on 192.168.102.250
+Discovered open port 49165/tcp on 192.168.102.250
+Discovered open port 49163/tcp on 192.168.102.250
+Discovered open port 27000/tcp on 192.168.102.250
+Discovered open port 5666/tcp on 192.168.102.250
+Discovered open port 49152/tcp on 192.168.102.250
+Discovered open port 49156/tcp on 192.168.102.250
+Discovered open port 9102/tcp on 192.168.102.250
+Completed SYN Stealth Scan at 12:27, 5.22s elapsed (1000 total ports)
+Initiating Service scan at 12:27
+Scanning 13 services on 192.168.102.250
+Service scan Timing: About 57.14% done; ETC: 12:29 (0:00:41 remaining)
+Completed Service scan at 12:29, 81.10s elapsed (14 services on 1 host)
+Initiating OS detection (try #1) against 192.168.102.250
+NSE: Script scanning 192.168.102.250.
+Initiating NSE at 12:29
+Completed NSE at 12:29, 5.54s elapsed
+Initiating NSE at 12:29
+Completed NSE at 12:29, 0.04s elapsed
+Initiating NSE at 12:29
+Completed NSE at 12:29, 0.00s elapsed
+Nmap scan report for 192.168.102.250
+Host is up (0.00032s latency).
+Not shown: 986 closed tcp ports (reset)
+PORT      STATE SERVICE        VERSION
+135/tcp   open  msrpc          Microsoft Windows RPC
+139/tcp   open  netbios-ssn    Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds   Windows Server 2008 R2 Enterprise 7600 microsoft-ds
+3389/tcp  open  ms-wbt-server?
+| ssl-cert: Subject: commonName=Procast-SIM
+| Issuer: commonName=Procast-SIM
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2026-10-11T11:00:22
+| Not valid after:  2027-04-12T11:00:22
+| MD5:   7260:611c:7612:b2c4:09ac:55a6:8dc5:b81c
+|_SHA-1: 1b80:99d6:9b0f:0a2c:4910:2c33:bae2:af78:ee39:845b
+|_ssl-date: 2026-11-25T11:28:52+00:00; -15s from scanner time.
+5666/tcp  open  tcpwrapped
+9102/tcp  open  jetdirect?
+27000/tcp open  flexlm         FlexLM license manager
+49152/tcp open  msrpc          Microsoft Windows RPC
+49153/tcp open  msrpc          Microsoft Windows RPC
+49156/tcp open  msrpc          Microsoft Windows RPC
+49163/tcp open  msrpc          Microsoft Windows RPC
+49165/tcp open  msrpc          Microsoft Windows RPC
+49167/tcp open  msrpc          Microsoft Windows RPC
+49176/tcp open  flexlm         FlexLM license manager
+MAC Address: 00:0C:29:24:BE:8B (VMware)
+Device type: general purpose
+Running: Microsoft Windows 7|2008|8.1
+OS CPE: cpe:/o:microsoft:windows_7::- cpe:/o:microsoft:windows_7::sp1 cpe:/o:microsoft:windows_server_2008::sp1 cpe:/o:microsoft:windows_server_2008:r2 cpe:/o:microsoft:windows_8 cpe:/o:microsoft:windows_8.1
+OS details: Microsoft Windows 7 SP0 - SP1, Windows Server 2008 SP1, Windows Server 2008 R2, Windows 8, or Windows 8.1 Update 1
+Uptime guess: 51.174 days (since Mon Oct  5 09:17:54 2026)
+Network Distance: 1 hop
+TCP Sequence Prediction: Difficulty=263 (Good luck!)
+IP ID Sequence Generation: Incremental
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb-security-mode: 
+|   account_used: guest
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+| smb2-time: 
+|   date: 2026-11-25T11:28:47
+|_  start_date: 2026-10-05T07:16:37
+| smb-os-discovery: 
+|   OS: Windows Server 2008 R2 Enterprise 7600 (Windows Server 2008 R2 Enterprise 6.1)
+|   OS CPE: cpe:/o:microsoft:windows_server_2008::-
+|   Computer name: Procast-SIM
+|   NetBIOS computer name: PROCAST-SIM\x00
+|   Workgroup: WORKGROUP\x00
+|_  System time: 2026-11-25T12:28:47+01:00
+|_clock-skew: mean: -15m14s, deviation: 29m59s, median: -15s
+| smb2-security-mode: 
+|   2:1:0: 
+|_    Message signing enabled but not required
+| nbstat: NetBIOS name: PROCAST-SIM, NetBIOS user: <unknown>, NetBIOS MAC: 00:0c:29:24:be:8b (VMware)
+| Names:
+|   PROCAST-SIM<00>      Flags: <unique><active>
+|   WORKGROUP<00>        Flags: <group><active>
+|_  PROCAST-SIM<20>      Flags: <unique><active>
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   0.32 ms 192.168.102.250
+
+NSE: Script Post-scanning.
+Initiating NSE at 12:29
+Completed NSE at 12:29, 0.00s elapsed
+Initiating NSE at 12:29
+Completed NSE at 12:29, 0.00s elapsed
+Initiating NSE at 12:29
+Completed NSE at 12:29, 0.00s elapsed
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 93.16 seconds
+           Raw packets sent: 1093 (48.790KB) | Rcvd: 1019 (41.502KB)

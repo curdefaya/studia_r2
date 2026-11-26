@@ -1,0 +1,16 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 11:50 CET
+Nmap scan report for lpa-ka.metal.agh.edu.pl (149.156.111.104)
+Host is up (0.00093s latency).
+Not shown: 998 filtered tcp ports (no-response)
+PORT    STATE SERVICE
+21/tcp  open  ftp
+443/tcp open  https
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: general purpose|bridge|specialized
+Running (JUST GUESSING): Microsoft Windows 7|2008|10 (87%), Digi embedded (85%)
+OS CPE: cpe:/o:microsoft:windows_7::sp1 cpe:/o:microsoft:windows_server_2008::sp2 cpe:/o:microsoft:windows_10 cpe:/o:microsoft:windows_10:1511
+Aggressive OS guesses: Microsoft Windows 7 SP1 or Windows Server 2008 SP2 (87%), Microsoft Windows 10 (86%), Digi PortServer TS serial-to-Ethernet bridge (85%), Microsoft Windows 10 1607 (85%), Microsoft Windows 10 1511 (85%)
+No exact OS matches for host (test conditions non-ideal).
+
+OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.70 seconds

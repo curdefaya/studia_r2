@@ -1,0 +1,28 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 12:27 CET
+Nmap scan report for dzk.ceramika.agh.edu.pl (149.156.116.12)
+Host is up (0.0068s latency).
+Nmap scan report for 149.156.116.17
+Host is up (0.0024s latency).
+Nmap scan report for 149.156.116.18
+Host is up (0.0033s latency).
+Nmap scan report for 149.156.116.76
+Host is up (0.0024s latency).
+Nmap scan report for a3-02.gorn.agh.edu.pl (149.156.116.129)
+Host is up (0.0024s latency).
+Nmap scan report for a3-06.gorn.agh.edu.pl (149.156.116.133)
+Host is up (0.0038s latency).
+Nmap scan report for a3-09.gorn.agh.edu.pl (149.156.116.136)
+Host is up (0.0024s latency).
+Nmap scan report for a3-10.gorn.agh.edu.pl (149.156.116.137)
+Host is up (0.0023s latency).
+Nmap scan report for zmb32.ceramika.agh.edu.pl (149.156.116.199)
+Host is up (0.0022s latency).
+Nmap scan report for oos.ceramika.agh.edu.pl (149.156.116.205)
+Host is up (0.0028s latency).
+Nmap scan report for dt1.adm.agh.edu.pl (149.156.116.241)
+Host is up (0.0034s latency).
+Nmap scan report for dt4.adm.agh.edu.pl (149.156.116.244)
+Host is up (0.0034s latency).
+Nmap scan report for aghrtr.agh.edu.pl (149.156.116.250)
+Host is up (0.0034s latency).
+Nmap done: 256 IP addresses (13 hosts up) scanned in 4.34 seconds

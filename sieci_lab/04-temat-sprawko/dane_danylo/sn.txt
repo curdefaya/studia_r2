@@ -1,0 +1,184 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 11:03 CET
+Nmap scan report for 192.168.102.0
+Host is up (0.00016s latency).
+MAC Address: 00:62:0B:06:43:E8 (Broadcom Limited)
+Nmap scan report for 192.168.102.1
+Host is up (0.00055s latency).
+MAC Address: 44:A8:42:2B:40:8D (Dell)
+Nmap scan report for 192.168.102.2
+Host is up (0.0023s latency).
+MAC Address: 20:23:51:32:DC:F2 (Unknown)
+Nmap scan report for 192.168.102.3
+Host is up (0.00013s latency).
+MAC Address: 00:13:78:D3:78:79 (Qsan Technology)
+Nmap scan report for 192.168.102.4
+Host is up (0.00086s latency).
+MAC Address: BC:24:11:A5:18:99 (Unknown)
+Nmap scan report for 192.168.102.5
+Host is up (0.00053s latency).
+MAC Address: 24:5E:BE:7D:90:7C (Qnap Systems)
+Nmap scan report for 192.168.102.6
+Host is up (0.00018s latency).
+MAC Address: 94:DE:80:77:3D:EC (Giga-byte Technology)
+Nmap scan report for 192.168.102.7
+Host is up (0.00053s latency).
+MAC Address: BC:24:11:C9:A6:6B (Unknown)
+Nmap scan report for 192.168.102.28
+Host is up (0.00060s latency).
+MAC Address: 00:D8:61:EA:8E:D6 (Micro-Star Intl)
+Nmap scan report for 192.168.102.47
+Host is up (0.00062s latency).
+MAC Address: 00:D8:61:EA:8B:73 (Micro-Star Intl)
+Nmap scan report for 192.168.102.48
+Host is up (0.00049s latency).
+MAC Address: 00:D8:61:EA:8B:87 (Micro-Star Intl)
+Nmap scan report for 192.168.102.49
+Host is up (0.00056s latency).
+MAC Address: 00:D8:61:EA:8B:7C (Micro-Star Intl)
+Nmap scan report for 192.168.102.53
+Host is up (0.0029s latency).
+MAC Address: 00:D8:61:EA:8C:85 (Micro-Star Intl)
+Nmap scan report for 192.168.102.54
+Host is up (0.00053s latency).
+MAC Address: 00:D8:61:EA:8B:70 (Micro-Star Intl)
+Nmap scan report for 192.168.102.55
+Host is up (0.00053s latency).
+MAC Address: 00:D8:61:EA:8E:C2 (Micro-Star Intl)
+Nmap scan report for 192.168.102.57
+Host is up (0.00057s latency).
+MAC Address: 00:D8:61:EA:8E:CB (Micro-Star Intl)
+Nmap scan report for 192.168.102.59
+Host is up (0.00056s latency).
+MAC Address: 00:D8:61:EA:8B:4A (Micro-Star Intl)
+Nmap scan report for 192.168.102.63
+Host is up (0.00070s latency).
+MAC Address: 00:D8:61:EA:8E:CA (Micro-Star Intl)
+Nmap scan report for 192.168.102.65
+Host is up (0.00078s latency).
+MAC Address: 00:D8:61:EA:8B:66 (Micro-Star Intl)
+Nmap scan report for 192.168.102.72
+Host is up (0.00028s latency).
+MAC Address: D0:50:99:78:5A:50 (ASRock Incorporation)
+Nmap scan report for 192.168.102.84
+Host is up (0.00040s latency).
+MAC Address: 10:FF:E0:81:E1:62 (Unknown)
+Nmap scan report for 192.168.102.86
+Host is up (0.00050s latency).
+MAC Address: 28:29:86:43:51:44 (APC by Schneider Electric)
+Nmap scan report for 192.168.102.87
+Host is up (0.00031s latency).
+MAC Address: 00:D8:61:EA:8B:6B (Micro-Star Intl)
+Nmap scan report for 192.168.102.95
+Host is up (0.00063s latency).
+MAC Address: 00:D8:61:EA:8C:2D (Micro-Star Intl)
+Nmap scan report for 192.168.102.98
+Host is up (0.00035s latency).
+MAC Address: 10:FF:E0:81:EC:C8 (Unknown)
+Nmap scan report for 192.168.102.99
+Host is up (0.00042s latency).
+MAC Address: 00:D8:61:EA:8E:CD (Micro-Star Intl)
+Nmap scan report for 192.168.102.100
+Host is up (0.00069s latency).
+MAC Address: 00:D8:61:EA:90:08 (Micro-Star Intl)
+Nmap scan report for 192.168.102.101
+Host is up (0.00022s latency).
+MAC Address: 10:FF:E0:82:8A:D9 (Unknown)
+Nmap scan report for 192.168.102.102
+Host is up (0.00024s latency).
+MAC Address: 00:D8:61:EA:8C:2E (Micro-Star Intl)
+Nmap scan report for 192.168.102.103
+Host is up (0.00012s latency).
+MAC Address: 10:FF:E0:82:8B:1F (Unknown)
+Nmap scan report for 192.168.102.104
+Host is up (0.00060s latency).
+MAC Address: 00:D8:61:EA:8B:72 (Micro-Star Intl)
+Nmap scan report for 192.168.102.105
+Host is up (0.00016s latency).
+MAC Address: 10:FF:E0:82:8C:4E (Unknown)
+Nmap scan report for 192.168.102.106
+Host is up (0.00030s latency).
+MAC Address: 10:FF:E0:82:90:47 (Unknown)
+Nmap scan report for 192.168.102.107
+Host is up (0.00018s latency).
+MAC Address: 10:FF:E0:82:8B:F8 (Unknown)
+Nmap scan report for 192.168.102.109
+Host is up (0.00032s latency).
+MAC Address: 00:D8:61:EA:8B:6C (Micro-Star Intl)
+Nmap scan report for 192.168.102.120
+Host is up (0.00052s latency).
+MAC Address: 9C:6B:00:34:11:99 (Unknown)
+Nmap scan report for 192.168.102.126
+Host is up (0.00024s latency).
+MAC Address: 9C:6B:00:34:E5:CF (Unknown)
+Nmap scan report for 192.168.102.127
+Host is up (0.00021s latency).
+MAC Address: 9C:6B:00:34:11:71 (Unknown)
+Nmap scan report for 192.168.102.131
+Host is up (0.00058s latency).
+MAC Address: 64:4E:D7:69:B5:4D (Unknown)
+Nmap scan report for 192.168.102.133
+Host is up (0.00036s latency).
+MAC Address: 9C:6B:00:34:11:35 (Unknown)
+Nmap scan report for 192.168.102.134
+Host is up (0.00026s latency).
+MAC Address: D0:AD:08:55:3C:CC (Unknown)
+Nmap scan report for 192.168.102.135
+Host is up (0.00021s latency).
+MAC Address: 9C:6B:00:34:11:96 (Unknown)
+Nmap scan report for 192.168.102.137
+Host is up (0.00018s latency).
+MAC Address: D0:AD:08:55:3D:9C (Unknown)
+Nmap scan report for 192.168.102.140
+Host is up (0.00029s latency).
+MAC Address: 90:1B:0E:ED:CD:17 (Fujitsu Technology Solutions GmbH)
+Nmap scan report for 192.168.102.141
+Host is up (0.00027s latency).
+MAC Address: 90:1B:0E:EE:94:FA (Fujitsu Technology Solutions GmbH)
+Nmap scan report for 192.168.102.143
+Host is up (0.00027s latency).
+MAC Address: 90:1B:0E:EE:95:00 (Fujitsu Technology Solutions GmbH)
+Nmap scan report for 192.168.102.144
+Host is up (0.00028s latency).
+MAC Address: 10:FF:E0:82:8B:1A (Unknown)
+Nmap scan report for 192.168.102.145
+Host is up (0.00025s latency).
+MAC Address: 10:FF:E0:82:8A:B1 (Unknown)
+Nmap scan report for 192.168.102.146
+Host is up (0.00014s latency).
+MAC Address: 00:D8:61:EA:8B:7A (Micro-Star Intl)
+Nmap scan report for 192.168.102.147
+Host is up (0.00027s latency).
+MAC Address: 00:D8:61:EA:8B:FE (Micro-Star Intl)
+Nmap scan report for 192.168.102.149
+Host is up (0.00010s latency).
+MAC Address: 00:D8:61:EA:8F:B2 (Micro-Star Intl)
+Nmap scan report for 192.168.102.165
+Host is up (0.0011s latency).
+MAC Address: 00:15:5D:66:01:04 (Microsoft)
+Nmap scan report for 192.168.102.196
+Host is up (0.00036s latency).
+MAC Address: 00:D8:61:EA:8C:05 (Micro-Star Intl)
+Nmap scan report for 192.168.102.199
+Host is up (0.00031s latency).
+MAC Address: 00:D8:61:EA:8B:43 (Micro-Star Intl)
+Nmap scan report for 192.168.102.247
+Host is up (0.00074s latency).
+MAC Address: BC:24:11:92:A3:18 (Unknown)
+Nmap scan report for 192.168.102.248
+Host is up (0.00023s latency).
+MAC Address: 38:C4:E8:0A:7C:C8 (NSS Sp. z o.o.)
+Nmap scan report for 192.168.102.249
+Host is up (0.00026s latency).
+MAC Address: 00:0C:29:D5:8A:2D (VMware)
+Nmap scan report for 192.168.102.250
+Host is up (0.00024s latency).
+MAC Address: 00:0C:29:24:BE:8B (VMware)
+Nmap scan report for 192.168.102.252
+Host is up (0.0014s latency).
+MAC Address: 00:80:C8:39:9B:01 (D-Link Systems)
+Nmap scan report for 192.168.102.253
+Host is up (0.00076s latency).
+MAC Address: 00:80:C8:39:9B:03 (D-Link Systems)
+Nmap scan report for 192.168.102.150
+Host is up.
+Nmap done: 256 IP addresses (61 hosts up) scanned in 1.59 seconds

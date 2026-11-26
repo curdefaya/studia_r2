@@ -1,0 +1,16 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-25 11:39 CET
+Nmap scan report for 192.168.102.249
+Host is up (0.00052s latency).
+Not shown: 994 closed tcp ports (reset)
+PORT      STATE SERVICE      VERSION
+135/tcp   open  msrpc        Microsoft Windows RPC
+139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds Microsoft Windows 2003 or 2008 microsoft-ds
+1025/tcp  open  msrpc        Microsoft Windows RPC
+1026/tcp  open  msrpc        Microsoft Windows RPC
+27000/tcp open  flexlm       FlexLM license manager
+MAC Address: 00:0C:29:D5:8A:2D (VMware)
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows, cpe:/o:microsoft:windows_server_2003
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 53.82 seconds
